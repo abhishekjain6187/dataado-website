@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dataado — Self-hosted data movement, discovery &amp; workflow</title>
-  <meta name="description" content="Dataado moves files, runs SQL-based ETL across SQL Server and Oracle, discovers what's inside unfamiliar databases, and orchestrates it all as auditable workflows — self-hosted, with AI that never leaves your network." />
+  <meta name="description" content="Dataado moves files, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, discovers what's inside unfamiliar databases, and orchestrates it all as auditable workflows — self-hosted, with AI that never leaves your network." />
 
   <!-- No-flash theme init: honour saved choice, else OS preference -->
   <script>
@@ -193,6 +193,29 @@
     .video-wrap video { display:block; width:100%; height:auto; aspect-ratio:16/9;
       border-radius:16px; border:1px solid var(--panel-border); background:#0b1424;
       box-shadow:0 18px 50px rgba(27,31,59,.16); }
+    /* -- AI workflow generation -- */
+    .gen-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+    .gen-panel { background:var(--surface); border:1px solid var(--border); border-radius:16px;
+      padding:22px; box-shadow:var(--shadow); }
+    .gen-lbl { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      color:var(--faint); margin-bottom:10px; }
+    .gen-prompt { background:var(--eyebrow-bg); border:1px solid var(--border); border-radius:10px;
+      padding:14px 16px; font-size:14.5px; line-height:1.6; color:var(--ink); }
+    .gen-cta { margin-top:14px; display:inline-block; font-weight:700; font-size:14px;
+      color:var(--btn-fg); background:var(--primary); padding:9px 16px; border-radius:10px; }
+    .gen-cta .sub { font-weight:500; opacity:.88; }
+    .gen-down { text-align:center; color:var(--faint); font-size:22px; margin:14px 0; }
+    .gen-step { display:flex; gap:14px; align-items:baseline; padding:10px 0;
+      border-bottom:1px solid var(--panel-item-border); }
+    .gen-step:last-of-type { border-bottom:0; }
+    .gen-n { font-size:12px; font-weight:700; color:var(--num-fg); background:var(--num-bg);
+      border-radius:6px; padding:2px 7px; flex-shrink:0; }
+    .gen-k { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:14px; font-weight:700;
+      color:var(--ink); min-width:130px; }
+    .gen-d { font-size:14px; color:var(--muted); }
+    .gen-ok { margin-top:12px; font-size:13px; font-weight:600; color:var(--running-fg);
+      background:var(--running-bg); border-radius:8px; padding:8px 12px; display:inline-block; }
+    @media (max-width:900px) { .gen-grid { grid-template-columns:1fr; gap:26px; } }
     .video-wrap figcaption { margin:14px auto 0; max-width:760px; text-align:center;
       color:var(--muted); font-size:14.5px; line-height:1.6; }
   </style>
@@ -271,7 +294,7 @@
         <div>
           <div class="pill">MFT · ETL · Workflow · Data Catalog · AI</div>
           <h1 class="sg">Move it. Transform it.<br>Discover it. Prove it.</h1>
-          <p class="lede">Dataado moves files across SFTP, cloud and on-prem systems, runs SQL-based ETL across SQL Server and Oracle, maps what's inside unfamiliar databases, and orchestrates all of it as reliable, auditable workflows — self-hosted, so nothing leaves your network.</p>
+          <p class="lede">Dataado moves files across SFTP, cloud and on-prem systems, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, maps what's inside unfamiliar databases, and orchestrates all of it as reliable, auditable workflows — self-hosted, so nothing leaves your network.</p>
           <div class="btn-row">
             <a class="btn-primary" href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20Dataado">Get in touch →</a>
             <a class="btn-ghost" href="#how">See how it works</a>
@@ -326,7 +349,7 @@
         <div class="tile">
           <div class="ic" style="background:linear-gradient(135deg,var(--i2a),var(--i2b));"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--icon-fg)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg></div>
           <h3 class="sg">SQL-based ETL</h3>
-          <p>Export query results to files, load files into tables, and run scripts — across SQL Server and Oracle, in either direction. Streamed, so file size is never the limit.</p>
+          <p>Export query results to files, load files into tables, and run scripts — across SQL Server, Oracle, PostgreSQL and MySQL, in either direction. Streamed, so file size is never the limit.</p>
         </div>
         <div class="tile">
           <div class="ic" style="background:linear-gradient(135deg,var(--i3a),var(--i3b));"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--icon-fg)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M6 8.5v3a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3M12 13.5v2"/></svg></div>
@@ -351,9 +374,9 @@
         <div class="tile"><h4 class="sg">Visual workflow designer</h4><p>Build top-to-bottom flows with per-activity forms, connection pickers, loop &amp; condition boxes, and a live JSON view.</p></div>
         <div class="tile"><h4 class="sg">Schedule · file · webhook triggers</h4><p>Run on a cron schedule, the moment a file lands, or from an inbound token-authed webhook.</p></div>
         <div class="tile"><h4 class="sg">Streamed PGP encryption</h4><p>Encrypt and decrypt multi-gigabyte files with bounded, predictable memory — proven past 2 GB.</p></div>
-        <div class="tile"><span class="tag">New</span><h4 class="sg">Data catalog &amp; classification</h4><p>Discover PAMI, documents, file-pointer columns, flags and lookup tables on SQL Server or Oracle — classified by value shape, grouped into business concepts, and turned into a draft extraction query.</p></div>
-        <div class="tile"><span class="tag">New</span><h4 class="sg">Self-hosted AI co-pilot</h4><p>Explain a failed run in plain language, grounded in its real context. Inference runs on a model server you host — prompts never leave your network.</p></div>
-        <div class="tile"><span class="tag">New</span><h4 class="sg">Cross-engine ETL</h4><p>Load between SQL Server and Oracle in both directions, with type mapping and schema pre-flight handled for you.</p></div>
+        <div class="tile"><span class="tag">New</span><h4 class="sg">Data catalog &amp; classification</h4><p>Discover PAMI, documents, file-pointer columns, flags and lookup tables on any of the four engines — classified by value shape, grouped into business concepts, and turned into a draft extraction query.</p></div>
+        <div class="tile"><span class="tag">New</span><h4 class="sg">Self-hosted AI co-pilot</h4><p>Describe a pipeline and get a validated draft workflow; explain a failed run in plain language. Inference runs on a model server you host — prompts never leave your network.</p></div>
+        <div class="tile"><span class="tag">New</span><h4 class="sg">Cross-engine ETL</h4><p>Load between SQL Server, Oracle, PostgreSQL and MySQL in either direction, with type mapping and schema pre-flight handled for you.</p></div>
         <div class="tile"><h4 class="sg">Tamper-evident audit</h4><p>Every change is hash-chained and append-only — enforced at the database itself, not just the app.</p></div>
         <div class="tile"><h4 class="sg">Multi-tenant &amp; SSO</h4><p>Fail-closed isolation, five server-side roles, and Microsoft Entra sign-in — including per-tenant B2B directories.</p></div>
         <div class="tile"><h4 class="sg">Operational alerting</h4><p>Health checks, stuck-run detection and reaping, and failure alerts to email or Teams.</p></div>
@@ -397,7 +420,7 @@
         <div class="tile">
           <span class="tag">Data Catalog</span>
           <h3 class="sg" style="font-size:26px;letter-spacing:-.02em;margin:6px 0 12px;">Understand a database you've never seen</h3>
-          <p style="font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 18px;">Handed an unfamiliar clinical or ERP system? Dataado scans it and tells you where the demographics, orders, results, documents, flags and code tables actually live — even when the tables are named <span class="sg" style="color:var(--ink);">T_47</span> and the columns <span class="sg" style="color:var(--ink);">C1…C7</span>. The same map comes back whether the source is SQL Server or Oracle.</p>
+          <p style="font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 18px;">Handed an unfamiliar clinical or ERP system? Dataado scans it and tells you where the demographics, orders, results, documents, flags and code tables actually live — even when the tables are named <span class="sg" style="color:var(--ink);">T_47</span> and the columns <span class="sg" style="color:var(--ink);">C1…C7</span>. The same map comes back whichever of the four engines the source runs on.</p>
           <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Classifies columns by their <strong>data</strong>, not their names — SSNs, emails, file paths, flags and documents are recognised by value shape.</span></div>
           <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Finds <strong>file-pointer</strong> columns Dataado can then act on — locate the pointer, fetch what it points at.</span></div>
           <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Aggregates-only sampling — it learns "96% SSN-shaped" without ever reading a single value. Shape travels; content never does.</span></div>
@@ -408,9 +431,48 @@
           <span class="tag">AI co-pilot</span>
           <h3 class="sg" style="font-size:26px;letter-spacing:-.02em;margin:6px 0 12px;">AI that never leaves your network</h3>
           <p style="font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 18px;">Dataado's AI is an <strong>opt-in add-on</strong> that runs entirely on a model server you host. Prompts carry run logs, schemas and connection codes — so they never touch a third-party API.</p>
+          <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Builds a workflow from a sentence</strong> — describe the pipeline, get a validated draft in the designer. <a href="#ai-build" style="color:var(--primary);font-weight:600;">See how &rarr;</a></span></div>
           <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Explain this failure</strong> — a grounded, specific diagnosis of a failed run, assembled from its real config, outputs and logs.</span></div>
+          <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>AI steps inside a workflow</strong> — classify content, summarise a run, recommend a next step. With the add-on off they simply no-op, so the workflow still runs.</span></div>
           <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Two switches, both required — a platform master switch and a per-tenant entitlement. Off by default; fails by disappearing, never by breaking.</span></div>
           <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Plug-and-play — point it at your own endpoint and model from the admin page; no code, no restart.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI WORKFLOW GENERATION -->
+    <section id="ai-build">
+      <div class="center">
+        <div class="eyebrow">AI workflow generation</div>
+        <h2 class="sg">Describe the pipeline. Review the draft. Ship it.</h2>
+      </div>
+      <div class="gen-grid" style="margin-top:34px;">
+        <div>
+          <p style="font-size:16px;line-height:1.7;color:var(--muted);margin:0 0 20px;">
+            Say what you need moved, in plain language. Dataado drafts a real workflow against
+            <strong>your own connection codes</strong>, checks it with the same validators that guard a
+            hand-built one, and opens it in the visual designer for you to change.</p>
+          <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Always a draft.</strong> Nothing is saved and nothing runs until you press Create &mdash; the AI has no path of its own to your data.</span></div>
+          <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Validated before you see it.</strong> Unknown steps, broken references and wrong-family connections are caught and repaired automatically; whatever cannot be fixed is shown as a warning rather than hidden.</span></div>
+          <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>You edit it as an ordinary workflow.</strong> The draft opens in the same visual designer as everything else &mdash; there is no separate AI mode to get stuck in.</span></div>
+          <div class="checkrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Every attempt is kept.</strong> Prompt, outcome and reason are recorded, so a failed or timed-out generation is reviewable and retryable instead of lost.</span></div>
+        </div>
+        <div>
+          <div class="gen-panel">
+            <div class="gen-lbl">What should it do?</div>
+            <div class="gen-prompt">Every night at 2am, export yesterday&rsquo;s orders from the
+              warehouse to a CSV, upload it to the partner SFTP, and email ops the row count.</div>
+            <div class="gen-cta">&#10038; Generate draft<span class="sub"> &middot; self-hosted model</span></div>
+          </div>
+          <div class="gen-down">&darr;</div>
+          <div class="gen-panel">
+            <div class="gen-lbl">Draft &mdash; review before saving</div>
+            <div class="gen-step"><span class="gen-n">01</span><span class="gen-k">RunSqlScript</span><span class="gen-d">Count new orders</span></div>
+            <div class="gen-step"><span class="gen-n">02</span><span class="gen-k">ExportToFile</span><span class="gen-d">orders_2026-09-18.csv</span></div>
+            <div class="gen-step"><span class="gen-n">03</span><span class="gen-k">UploadFile</span><span class="gen-d">&rarr; PARTNER-SFTP</span></div>
+            <div class="gen-step"><span class="gen-n">04</span><span class="gen-k">SendEmail</span><span class="gen-d">row count to ops</span></div>
+            <div class="gen-ok">&#10003; Validated &middot; 3 connection codes resolved &middot; opens in the designer</div>
+          </div>
         </div>
       </div>
     </section>
@@ -432,8 +494,8 @@
           <h2 class="sg" style="font-size:30px;letter-spacing:-.02em;margin:10px 0 24px;">Speaks to the systems you already run</h2>
           <div class="conn">
             <span>SFTP</span><span>FTP / FTPS</span><span>Amazon S3</span><span>Azure Blob</span><span>Azure Data Lake</span>
-            <span>SMB</span><span>Local / UNC</span><span>SQL Server</span><span>Oracle</span><span>OpenPGP</span>
-            <span>SMTP Email</span><span>Microsoft Teams</span><span>Microsoft Entra</span><span>Webhooks</span>
+            <span>SMB</span><span>Local / UNC</span><span>SQL Server</span><span>Oracle</span>
+            <span>PostgreSQL</span><span>MySQL</span><span>OpenPGP</span><span>SMTP Email</span><span>Microsoft Teams</span><span>Microsoft Entra</span><span>Webhooks</span>
           </div>
         </div>
       </div>
