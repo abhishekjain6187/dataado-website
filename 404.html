@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page not found — Dataado</title>
+  <meta name="description" content="That page doesn't exist on dataado.com. Head back to the homepage." />
+  <!-- Deliberately not indexed: a 404 in search results helps nobody. -->
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%234F46E5%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23818CF8%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22url(%23g)%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%229%22%20width%3D%2216%22%20height%3D%223.4%22%20rx%3D%221.7%22%20fill%3D%22%23fff%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2214.6%22%20width%3D%2212%22%20height%3D%223.4%22%20rx%3D%221.7%22%20fill%3D%22%23fff%22%20opacity%3D%22.8%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2220.2%22%20width%3D%228%22%20height%3D%223.4%22%20rx%3D%221.7%22%20fill%3D%22%23fff%22%20opacity%3D%22.6%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2221.9%22%20r%3D%222.6%22%20fill%3D%22%2322D3EE%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml" />
+  <meta name="theme-color" content="#4F46E5" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0F1B2D" media="(prefers-color-scheme: dark)" />
+
+  <!-- Same no-flash theme init as the homepage, reading the same localStorage key, so
+       arriving here from a dark-mode session does not flash white. -->
+  <script>
+    (function () {
+      try {
+        var v = localStorage.getItem('dataado-theme');
+        var dark = v ? v === 'dark'
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    /* The homepage inlines these as data: URIs; here they are real files so a page nobody
+       should reach does not carry 50 KB of base64. Same faces either way, so the type
+       does not change between pages. */
+    @font-face { font-family:'Instrument Sans'; src:url(InstrumentSans.woff2) format('woff2');
+      font-weight:400 700; font-display:swap; }
+    @font-face { font-family:'Space Grotesk'; src:url(SpaceGrotesk.woff2) format('woff2');
+      font-weight:400 700; font-display:swap; }
+
+    :root {
+      --bg:#F7F8FC; --ink:#1B1F3B; --muted:#565B78; --border:#E7E8F2; --surface:#FFFFFF;
+      --primary:#4F46E5; --btn-fg:#FFFFFF; --glow-a:#818CF8; --glow-b:#4F46E5; --glow-op:.40;
+      color-scheme: light;
+    }
+    :root[data-theme="dark"] {
+      --bg:#0F1B2D; --ink:#EAF0FA; --muted:#9FB0C9; --border:rgba(255,255,255,.08);
+      --surface:rgba(255,255,255,.04); --primary:#38BDF8; --btn-fg:#0F1B2D;
+      --glow-a:#38BDF8; --glow-b:#A78BFA; --glow-op:.22;
+      color-scheme: dark;
+    }
+
+    * { box-sizing:border-box; }
+    body {
+      margin:0; min-height:100vh; background:var(--bg); color:var(--ink);
+      font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+      display:grid; place-items:center; padding:48px 22px;
+      -webkit-font-smoothing:antialiased;
+    }
+    .glow {
+      position:fixed; inset:auto; top:-10%; left:50%; width:min(900px,120vw); height:560px;
+      margin-left:calc(min(900px,120vw) / -2); pointer-events:none; opacity:var(--glow-op);
+      background:radial-gradient(45% 50% at 40% 40%, var(--glow-b) 0%, transparent 70%),
+                 radial-gradient(40% 45% at 62% 55%, var(--glow-a) 0%, transparent 72%);
+      filter:blur(40px);
+    }
+    main { position:relative; text-align:center; max-width:560px; }
+    .mark { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:34px; }
+    .mark span {
+      font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:21px; letter-spacing:-.02em;
+    }
+    .code {
+      font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(64px,14vw,104px);
+      line-height:1; letter-spacing:-.04em; margin:0;
+    }
+    h1 {
+      font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(24px,5vw,32px);
+      letter-spacing:-.02em; margin:16px 0 12px;
+    }
+    p { color:var(--muted); font-size:16px; line-height:1.65; margin:0 auto 30px; max-width:44ch; }
+    .row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    a.primary, a.ghost {
+      display:inline-block; font-weight:700; font-size:15px; padding:13px 22px;
+      border-radius:12px; text-decoration:none; border:1px solid transparent;
+    }
+    a.primary { background:var(--primary); color:var(--btn-fg); }
+    a.ghost { color:var(--ink); border-color:var(--border); background:var(--surface); }
+    a.primary:hover { filter:brightness(1.07); }
+    a.ghost:hover { border-color:var(--primary); color:var(--primary); }
+  </style>
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+  <main>
+    <div class="mark">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--primary)"/><stop offset="1" stop-color="#818CF8"/>
+        </linearGradient></defs>
+        <rect width="32" height="32" rx="8" fill="url(#dg)"/>
+        <rect x="8" y="9" width="16" height="3.4" rx="1.7" fill="#fff"/>
+        <rect x="8" y="14.6" width="12" height="3.4" rx="1.7" fill="#fff" opacity=".8"/>
+        <rect x="8" y="20.2" width="8" height="3.4" rx="1.7" fill="#fff" opacity=".6"/>
+        <circle cx="22" cy="21.9" r="2.6" fill="#22D3EE"/>
+      </svg>
+      <span>Dataado</span>
+    </div>
+
+    <p class="code">404</p>
+    <h1>That page moved, or never existed.</h1>
+    <p>Nothing here. The homepage has the platform overview, the 30-second video and the
+      interactive demo &mdash; all of which do exist.</p>
+
+    <div class="row">
+      <a class="primary" href="/">Back to the homepage</a>
+      <a class="ghost" href="/#watch">Watch the overview</a>
+    </div>
+  </main>
+</body>
+</html>
