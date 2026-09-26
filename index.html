@@ -188,6 +188,13 @@
     .demo-link { position:relative; z-index:2; margin-top:22px; }
     .demo-link a { display:inline-block; font-weight:700; color:var(--spot-accent-fg); background:var(--spot-accent-bg); border:1px solid var(--spot-accent-border); padding:10px 16px; border-radius:12px; }
     .demo-link a:hover { filter:brightness(1.1); }
+    /* ── overview video ── */
+    .video-wrap { margin:30px auto 0; max-width:1040px; }
+    .video-wrap video { display:block; width:100%; height:auto; aspect-ratio:16/9;
+      border-radius:16px; border:1px solid var(--panel-border); background:#0b1424;
+      box-shadow:0 18px 50px rgba(27,31,59,.16); }
+    .video-wrap figcaption { margin:14px auto 0; max-width:760px; text-align:center;
+      color:var(--muted); font-size:14.5px; line-height:1.6; }
   </style>
   <style>/* ── interactive demo (overlay) ── */
 #dm{position:fixed;inset:0;z-index:1000;overflow:auto;background:var(--paper);font:14px/1.5 system-ui,-apple-system,'Segoe UI',Inter,Roboto,sans-serif;color:var(--ink)}
@@ -248,6 +255,7 @@
         <span class="brand-name">Dataado</span>
       </div>
       <div class="nav-links">
+        <a href="#watch">Watch</a>
         <a href="#platform">Platform</a>
         <a href="#capabilities">Capabilities</a>
         <a href="#discover">Discover &amp; AI</a>
@@ -284,6 +292,28 @@
         </div>
       </div>
     </div>
+
+    <!-- OVERVIEW VIDEO -->
+    <section id="watch" style="padding-top:10px;">
+      <div class="center">
+        <div class="eyebrow">See it</div>
+        <h2 class="sg">Thirty seconds, end to end</h2>
+      </div>
+      <figure class="video-wrap">
+        <!-- preload="none" matters: the file is ~7 MB and must not be pulled on page
+             load. The poster is the only thing fetched until someone presses play. -->
+        <video controls playsinline preload="none" width="1920" height="1080"
+               poster="dataado-overview.jpg"
+               aria-label="Dataado overview — orchestration, file transfer, cross-engine ETL, data catalog and audit">
+          <source src="dataado-overview.mp4" type="video/mp4" />
+          <p>Your browser can&rsquo;t play this video.
+             <a href="dataado-overview.mp4">Download it instead</a>.</p>
+        </video>
+        <figcaption>Orchestration, managed file transfer, cross-engine ETL, catalog discovery
+          and the audit trail &mdash; the whole platform in one pass. Sample data throughout;
+          nothing shown here touches a real system.</figcaption>
+      </figure>
+    </section>
 
     <!-- PLATFORM PILLARS -->
     <section id="platform" style="padding-top:24px;">
