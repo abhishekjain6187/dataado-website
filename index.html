@@ -3,32 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dataado — Self-hosted data movement, discovery &amp; workflow</title>
-  <meta name="description" content="Dataado moves files, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, discovers what's inside unfamiliar databases, and orchestrates it all as auditable workflows — self-hosted, with AI that never leaves your network." />
+  <title>DataADO — Self-hosted data movement, discovery &amp; workflow</title>
+  <meta name="description" content="DataADO moves files, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, discovers what's inside unfamiliar databases, and orchestrates it all as auditable workflows — self-hosted, with AI that never leaves your network." />
 
   <link rel="canonical" href="https://dataado.com/" />
 
-  <!-- Favicon as a data: URI so the page keeps making no extra requests for chrome.
-       Literal colours, not var(--primary): a data: URI cannot see the page's CSS. -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%234F46E5%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23818CF8%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%229%22%20width%3D%2216%22%20height%3D%223.4%22%20rx%3D%221.7%22%20fill%3D%22%23fff%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2214.6%22%20width%3D%2212%22%20height%3D%223.4%22%20rx%3D%221.7%22%20fill%3D%22%23fff%22%20opacity%3D%22.8%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%2220.2%22%20width%3D%228%22%20height%3D%223.4%22%20rx%3D%221.7%22%20fill%3D%22%23fff%22%20opacity%3D%22.6%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2221.9%22%20r%3D%222.6%22%20fill%3D%22%2322D3EE%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="dataado-overview.jpg" />
-  <meta name="theme-color" content="#4F46E5" media="(prefers-color-scheme: light)" />
+  <!-- Brand identity: real icon files, so the tab, the home screen and a shared link all
+       carry the DataADO mark. favicon.svg switches colour set with the OS; the .ico is the
+       fallback for older browsers and Windows. -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#F7F8FC" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0F1B2D" media="(prefers-color-scheme: dark)" />
 
   <!-- Social preview. Without these a shared link renders as a bare URL. -->
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Dataado" />
+  <meta property="og:site_name" content="DataADO" />
   <meta property="og:url" content="https://dataado.com/" />
-  <meta property="og:title" content="Dataado — self-hosted data movement, discovery &amp; workflow" />
-  <meta property="og:description" content="Dataado moves files, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, discovers what's inside unfamiliar databases, and orchestrates it all as auditable workflows — self-hosted, with AI that never leaves your network." />
-  <meta property="og:image" content="https://dataado.com/dataado-overview.jpg" />
-  <meta property="og:image:width" content="1280" />
-  <meta property="og:image:height" content="720" />
-  <meta property="og:image:alt" content="A Dataado workflow: a file-arrival trigger feeding parallel branches, a loop, a condition and an email step." />
+  <meta property="og:title" content="DataADO — Managed File Transfer · ETL · Workflow" />
+  <meta property="og:description" content="DataADO moves files, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, discovers what's inside unfamiliar databases, and orchestrates it all as auditable workflows — self-hosted, with AI that never leaves your network." />
+  <meta property="og:image" content="https://dataado.com/brand/social/dataado-og-1200x630.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="DataADO logo" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Dataado — self-hosted data movement, discovery &amp; workflow" />
-  <meta name="twitter:description" content="Dataado moves files, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, discovers what's inside unfamiliar databases, and orchestrates it all as auditable workflows — self-hosted, with AI that never leaves your network." />
-  <meta name="twitter:image" content="https://dataado.com/dataado-overview.jpg" />
+  <meta name="twitter:title" content="DataADO — Managed File Transfer · ETL · Workflow" />
+  <meta name="twitter:description" content="DataADO moves files, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, discovers what's inside unfamiliar databases, and orchestrates it all as auditable workflows — self-hosted, with AI that never leaves your network." />
+  <meta name="twitter:image" content="https://dataado.com/brand/social/dataado-og-1200x630.png" />
+  <meta name="twitter:image:alt" content="DataADO logo" />
 
   <!-- No-flash theme init: honour saved choice, else OS preference -->
   <script>
@@ -115,7 +119,15 @@
 
     /* Nav */
     nav { display:flex; align-items:center; justify-content:space-between; padding:26px 40px; position:relative; z-index:20; }
-    .brand { display:flex; align-items:center; gap:11px; }
+    .brand { display:flex; align-items:center; gap:11px; text-decoration:none; }
+    /* "light" files are for LIGHT backgrounds and vice versa, and the swap follows the ACTIVE
+       theme rather than the OS, since the site has its own toggle. */
+    .brand img { display:block; height:auto; }
+    :root .brand .on-dark, :root[data-theme="light"] .brand .on-dark { display:none; }
+    :root[data-theme="dark"] .brand .on-light { display:none; }
+    :root[data-theme="dark"] .brand .on-dark  { display:block; }
+    /* Desktop shows the wordmark; the mark only appears where the nav collapses. */
+    .brand .brand-mark { display:none !important; }
     .brand-name { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; letter-spacing:-.01em; color:var(--ink); }
     .nav-links { display:flex; align-items:center; gap:30px; font-size:15px; color:var(--nav-link); font-weight:500; }
     .nav-cta { background:var(--nav-cta-bg); color:var(--nav-cta-fg); padding:11px 20px; border-radius:10px; font-weight:600; }
@@ -210,6 +222,11 @@
          loses every in-page destination. Wrap them onto their own row instead. */
       nav { flex-wrap:wrap; row-gap:10px; }
       .nav-links { width:100%; order:3; flex-wrap:wrap; gap:14px 18px; justify-content:flex-start; }
+      /* Below the nav breakpoint the wordmark gives way to the compact mark. */
+      .brand .brand-word { display:none !important; }
+      :root .brand .brand-mark.on-light, :root[data-theme="light"] .brand .brand-mark.on-light { display:block !important; }
+      :root[data-theme="dark"] .brand .brand-mark.on-light { display:none !important; }
+      :root[data-theme="dark"] .brand .brand-mark.on-dark  { display:block !important; }
       .nav-links a:not(.nav-cta) { font-size:14px; }
       .nav-cta { order:2; margin-left:auto; }
       h1 { font-size:40px; }
@@ -292,29 +309,22 @@
 
     <!-- NAV -->
     <nav>
-      <div class="brand">
-        <!-- Dataado mark: stacked data layers + a moving node (discovery + movement) -->
-        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="dg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="var(--primary)"/><stop offset="1" stop-color="var(--mark-2)"/>
-            </linearGradient>
-          </defs>
-          <rect width="32" height="32" rx="8" fill="url(#dg)"/>
-          <rect x="8" y="9" width="16" height="3.4" rx="1.7" fill="#fff"/>
-          <rect x="8" y="14.6" width="12" height="3.4" rx="1.7" fill="#fff" opacity=".8"/>
-          <rect x="8" y="20.2" width="8" height="3.4" rx="1.7" fill="#fff" opacity=".6"/>
-          <circle cx="22" cy="21.9" r="2.6" fill="var(--mark-3)"/>
-        </svg>
-        <span class="brand-name">Dataado</span>
-      </div>
+      <a class="brand" href="/" aria-label="DataADO home">
+        <!-- One configuration at a time, never a combined lockup: the wordmark carries the name on
+             desktop, the compact mark takes over where the nav collapses. Explicit width/height from
+             each SVG's viewBox so neither causes layout shift. -->
+        <img class="brand-word on-light" src="/brand/logo/dataado-wordmark-light.svg" alt="DataADO" width="160" height="33" />
+        <img class="brand-word on-dark"  src="/brand/logo/dataado-wordmark-dark.svg"  alt="DataADO" width="160" height="33" />
+        <img class="brand-mark on-light" src="/brand/mark/dataado-mark-light.svg" alt="DataADO" width="32" height="32" />
+        <img class="brand-mark on-dark"  src="/brand/mark/dataado-mark-dark.svg"  alt="DataADO" width="32" height="32" />
+      </a>
       <div class="nav-links">
         <a href="#watch">Watch</a>
         <a href="#platform">Platform</a>
         <a href="#capabilities">Capabilities</a>
         <a href="#discover">Discover &amp; AI</a>
         <a href="#security">Security</a>
-        <a class="nav-cta" href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20Dataado">Contact us</a>
+        <a class="nav-cta" href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20DataADO">Contact us</a>
       </div>
     </nav>
 
@@ -325,9 +335,9 @@
         <div>
           <div class="pill">MFT · ETL · Workflow · Data Catalog · AI</div>
           <h1 class="sg">Move it. Transform it.<br>Discover it. Prove it.</h1>
-          <p class="lede">Dataado moves files across SFTP, cloud and on-prem systems, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, maps what's inside unfamiliar databases, and orchestrates all of it as reliable, auditable workflows — self-hosted, so nothing leaves your network.</p>
+          <p class="lede">DataADO moves files across SFTP, cloud and on-prem systems, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, maps what's inside unfamiliar databases, and orchestrates all of it as reliable, auditable workflows — self-hosted, so nothing leaves your network.</p>
           <div class="btn-row">
-            <a class="btn-primary" href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20Dataado">Get in touch →</a>
+            <a class="btn-primary" href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20DataADO">Get in touch →</a>
             <a class="btn-ghost" href="#how">See how it works</a>
           </div>
         </div>
@@ -358,7 +368,7 @@
              load. The poster is the only thing fetched until someone presses play. -->
         <video controls playsinline preload="none" width="1920" height="1080"
                poster="dataado-overview.jpg"
-               aria-label="Dataado overview — orchestration, file transfer, cross-engine ETL, data catalog and audit">
+               aria-label="DataADO overview — orchestration, file transfer, cross-engine ETL, data catalog and audit">
           <source src="dataado-overview.mp4" type="video/mp4" />
           <p>Your browser can&rsquo;t play this video.
              <a href="dataado-overview.mp4">Download it instead</a>.</p>
@@ -390,7 +400,7 @@
         <div class="tile">
           <div class="ic" style="background:linear-gradient(135deg,var(--i4a),var(--i4b));"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--icon-fg)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3a8 8 0 1 0 8 8"/><path d="M21 21l-4.3-4.3"/><path d="M11 7v4l3 2"/></svg></div>
           <h3 class="sg">Data Catalog</h3>
-          <p>Point Dataado at an unfamiliar database and it maps what's inside — classifying columns by their <em>data</em>, not their names — so you know exactly where to extract from.</p>
+          <p>Point DataADO at an unfamiliar database and it maps what's inside — classifying columns by their <em>data</em>, not their names — so you know exactly where to extract from.</p>
         </div>
       </div>
     </section>
@@ -452,9 +462,9 @@
         <div class="tile">
           <span class="tag">Data Catalog</span>
           <h3 class="sg" style="font-size:26px;letter-spacing:-.02em;margin:6px 0 12px;">Understand a database you've never seen</h3>
-          <p style="font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 18px;">Handed an unfamiliar clinical or ERP system? Dataado scans it and tells you where the demographics, orders, results, documents, flags and code tables actually live — even when the tables are named <span class="sg" style="color:var(--ink);">T_47</span> and the columns <span class="sg" style="color:var(--ink);">C1…C7</span>. The same map comes back whichever of the four engines the source runs on.</p>
+          <p style="font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 18px;">Handed an unfamiliar clinical or ERP system? DataADO scans it and tells you where the demographics, orders, results, documents, flags and code tables actually live — even when the tables are named <span class="sg" style="color:var(--ink);">T_47</span> and the columns <span class="sg" style="color:var(--ink);">C1…C7</span>. The same map comes back whichever of the four engines the source runs on.</p>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Classifies columns by their <strong>data</strong>, not their names — SSNs, emails, file paths, flags and documents are recognised by value shape.</span></div>
-          <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Finds <strong>file-pointer</strong> columns Dataado can then act on — locate the pointer, fetch what it points at.</span></div>
+          <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Finds <strong>file-pointer</strong> columns DataADO can then act on — locate the pointer, fetch what it points at.</span></div>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Aggregates-only sampling — it learns "96% SSN-shaped" without ever reading a single value. Shape travels; content never does.</span></div>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Turns discovery into a <strong>ready-to-run extraction query</strong> — audit columns dropped, code columns decoded against their lookup, soft-deleted rows filtered out.</span></div>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Learns your corrections</strong> — confirm or fix a finding once and it sticks across every re-scan, kept per-tenant and never shared.</span></div>
@@ -462,7 +472,7 @@
         <div class="tile">
           <span class="tag">AI co-pilot</span>
           <h3 class="sg" style="font-size:26px;letter-spacing:-.02em;margin:6px 0 12px;">AI that never leaves your network</h3>
-          <p style="font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 18px;">Dataado's AI is an <strong>opt-in add-on</strong> that runs entirely on a model server you host. Prompts carry run logs, schemas and connection codes — so they never touch a third-party API.</p>
+          <p style="font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 18px;">DataADO's AI is an <strong>opt-in add-on</strong> that runs entirely on a model server you host. Prompts carry run logs, schemas and connection codes — so they never touch a third-party API.</p>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Builds a workflow from a sentence</strong> — describe the pipeline, get a validated draft in the designer. <a href="#ai-build" style="color:var(--primary);font-weight:600;">See how &rarr;</a></span></div>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Explain this failure</strong> — a grounded, specific diagnosis of a failed run, assembled from its real config, outputs and logs.</span></div>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>AI steps inside a workflow</strong> — classify content, summarise a run, recommend a next step. With the add-on off they simply no-op, so the workflow still runs.</span></div>
@@ -481,7 +491,7 @@
       <div class="gen-grid" style="margin-top:34px;">
         <div>
           <p style="font-size:16px;line-height:1.7;color:var(--muted);margin:0 0 20px;">
-            Say what you need moved, in plain language. Dataado drafts a real workflow against
+            Say what you need moved, in plain language. DataADO drafts a real workflow against
             <strong>your own connection codes</strong>, checks it with the same validators that guard a
             hand-built one, and opens it in the visual designer for you to change.</p>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Always a draft.</strong> Nothing is saved and nothing runs until you press Create &mdash; the AI has no path of its own to your data.</span></div>
@@ -536,26 +546,20 @@
     <!-- CTA -->
     <section>
       <div class="cta">
-        <h2 class="sg">Ready to see Dataado move — and map — your data?</h2>
+        <h2 class="sg">Ready to see DataADO move — and map — your data?</h2>
         <p>Tell us what you're moving or the database you need to understand, and we'll show you the flow.</p>
-        <a href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20Dataado">Contact us →</a>
+        <a href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20DataADO">Contact us →</a>
       </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
-      <div class="brand">
-        <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <rect width="32" height="32" rx="8" fill="url(#dg)"/>
-          <rect x="8" y="9" width="16" height="3.4" rx="1.7" fill="#fff"/>
-          <rect x="8" y="14.6" width="12" height="3.4" rx="1.7" fill="#fff" opacity=".8"/>
-          <rect x="8" y="20.2" width="8" height="3.4" rx="1.7" fill="#fff" opacity=".6"/>
-          <circle cx="22" cy="21.9" r="2.6" fill="var(--mark-3)"/>
-        </svg>
-        <span class="brand-name" style="font-size:17px;">Dataado</span>
-      </div>
+      <a class="brand" href="/" aria-label="DataADO home">
+        <img class="brand-word on-light" src="/brand/logo/dataado-wordmark-light.svg" alt="DataADO" width="120" height="24" />
+        <img class="brand-word on-dark"  src="/brand/logo/dataado-wordmark-dark.svg"  alt="DataADO" width="120" height="24" />
+      </a>
       <span class="foot-tag">Secure, self-hosted data movement, discovery &amp; workflow</span>
-      <a class="foot-mail" href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20Dataado">abhishekjain_aj@outlook.com</a>
+      <a class="foot-mail" href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20DataADO">abhishekjain_aj@outlook.com</a>
     </footer>
 
   </div>
@@ -577,7 +581,7 @@
     })();
   </script>
   <div id="dm" hidden>
-<div class="demo-bar"><b>Dataado interactive demo</b> · every screen is clickable and runs on sample data — nothing here touches a real system. <a href="#how" onclick="closeDemo();return false;">✕ Exit demo</a></div>
+<div class="demo-bar"><b>DataADO interactive demo</b> · every screen is clickable and runs on sample data — nothing here touches a real system. <a href="#how" onclick="closeDemo();return false;">✕ Exit demo</a></div>
 <div id="app"></div>
 <div class="flash" id="flash"></div>
   </div>
@@ -588,8 +592,8 @@ const S = {
   user: { name: 'Abhishek Jain', email: 'abhishek.jain@orodb.example', role: 'SuperAdmin', tenant: 'Orodb', project: 'SAMPLE' },
   signedIn: false,
   connections: [
-    { code: 'BLOB-IN',     name: 'Inbound blob container',  protocol: 'AzureBlob', family: 'file', host: 'orodbstrata.blob.core.windows.net', root: 'strata-test', cred: 'ConnectionString', project: '', ok: true },
-    { code: 'AZ-SQL',      name: 'Azure SQL — warehouse',   protocol: 'SqlServer', family: 'sql',  host: 'strata-sql.database.windows.net', root: 'strata-dev', cred: 'ManagedIdentity', project: '', ok: true },
+    { code: 'BLOB-IN',     name: 'Inbound blob container',  protocol: 'AzureBlob', family: 'file', host: 'orodbdataado.blob.core.windows.net', root: 'dataado-test', cred: 'ConnectionString', project: '', ok: true },
+    { code: 'AZ-SQL',      name: 'Azure SQL — warehouse',   protocol: 'SqlServer', family: 'sql',  host: 'dataado-sql.database.windows.net', root: 'dataado-dev', cred: 'ManagedIdentity', project: '', ok: true },
     { code: 'ONPREM-SQL',  name: 'On-prem SQL (clinical)',  protocol: 'SqlServer', family: 'sql',  host: '10.20.4.18', root: 'ClinicalDW', cred: 'UsernamePassword', project: 'SAMPLE', ok: true },
     { code: 'PARTNER-SFTP',name: 'Partner SFTP',            protocol: 'Sftp',      family: 'file', host: 'sftp.partner.example', root: '/inbound', cred: 'SshKey', project: '', ok: true },
     { code: 'ORA-ERP',     name: 'Oracle ERP',              protocol: 'Oracle',    family: 'sql',  host: 'erp-db.corp.local', root: 'ERPPDB', cred: 'UsernamePassword', project: 'SAMPLE', ok: true },
@@ -642,7 +646,7 @@ const S = {
   projects: [ { code: 'SAMPLE', name: 'Sample project', tenant: 'ORODB', wfs: 5 }, { code: 'FINANCE', name: 'Finance', tenant: 'ORODB', wfs: 3 }, { code: 'CLINICAL', name: 'Clinical DW', tenant: 'CONTOSO', wfs: 2 } ],
   users: [ { name: 'Abhishek Jain', email: 'abhishek.jain@orodb.example', role: 'SuperAdmin', entra: true, last: 'today 09:12' }, { name: 'Priya N.', email: 'priya@orodb.example', role: 'ProjectAdmin', entra: true, last: 'yesterday' }, { name: 'Ops Bot', email: 'ops@orodb.example', role: 'Operator', entra: false, last: '3 days ago' }, { name: 'Auditor', email: 'audit@orodb.example', role: 'ReadOnly', entra: true, last: 'last week' } ],
   audit: [],
-  settings: { email: { host: 'smtp.orodb.example', port: 587, from: 'strata@orodb.example', tls: true }, worker: { invis: 30, stuck: 60 }, ops: { email: 'ops@orodb.example', teams: '' }, log: { protocol: 'AzureBlob', root: 'strata-logs', retention: 30, health: 'OK · 09:40' }, ai: { enabled: true, endpoint: 'http://10.20.4.40:11434', model: 'qwen2.5-coder:3b', embed: 'nomic-embed-text', guard: true } },
+  settings: { email: { host: 'smtp.orodb.example', port: 587, from: 'dataado@orodb.example', tls: true }, worker: { invis: 30, stuck: 60 }, ops: { email: 'ops@orodb.example', teams: '' }, log: { protocol: 'AzureBlob', root: 'dataado-logs', retention: 30, health: 'OK · 09:40' }, ai: { enabled: true, endpoint: 'http://10.20.4.40:11434', model: 'qwen2.5-coder:3b', embed: 'nomic-embed-text', guard: true } },
 };
 const KINDS = {
   ImportFileToTable:{l:'Import file to table',f:'sql',out:['tables','totalRows','tableCount','fileCount']},
@@ -758,7 +762,7 @@ function shell(content,crumb,area='dash'){
     <a href="#/admin/settings/email" class="${on('admin/settings/email')}">${ic('mail')} Email</a><a href="#/admin/settings/worker" class="${on('admin/settings/worker')}">${ic('wk')} Worker</a><a href="#/admin/settings/logstorage" class="${on('admin/settings/logstorage')}">${ic('db')} Log storage</a><a href="#/admin/settings/opsalerts" class="${on('admin/settings/opsalerts')}">${ic('al')} Ops alerts</a><a href="#/admin/settings/ai" class="${on('admin/settings/ai')}">${ic('set')} AI add-on</a>
     <div class="grp">Operate</div><a href="#/dashboard">${ic('dash')} Operator dashboard</a>`;
   const ws=workerState(); const pillCls=ws==='idle'?'':ws==='processing'?'busy':'busy';
-  return `<div class="shell"><aside class="side"><div class="d-brand"><i></i><div>Dataado<small>${area==='admin'?'Administration':'Operations'}</small></div></div>
+  return `<div class="shell"><aside class="side"><div class="d-brand"><i></i><div>DataADO<small>${area==='admin'?'Administration':'Operations'}</small></div></div>
     <div class="nav">${area==='admin'?adminNav:dashNav}</div>
     <div class="foot"><div class="ctx"><label>Project</label><select onchange="S.user.project=this.value;flash('Switched to project '+this.value)"><option ${S.user.project==='SAMPLE'?'selected':''}>SAMPLE</option><option ${S.user.project==='FINANCE'?'selected':''}>FINANCE</option></select></div>
     <div class="who"><div class="av">AJ</div><div><div>${esc(S.user.name)}</div><div class="r">${esc(S.user.role)} · ${esc(S.user.tenant)}</div></div><a href="#/login" onclick="S.signedIn=false">Sign out</a></div></div></aside>
@@ -767,12 +771,12 @@ function shell(content,crumb,area='dash'){
       <button class="ibtn" onclick="toggleTheme()" title="Toggle light/dark">◐ Theme</button></div>${content}</div></div>`;
 }
 /* ═══════════════════════════════════════════ screens ═══════════════════════════════════════════ */
-route(/^login$/,()=>`<div class="login"><div class="d-card"><div class="d-brand" style="color:var(--ink);padding:0 0 14px"><i></i><div>Dataado<small style="color:var(--faint)">Sign in</small></div></div>
+route(/^login$/,()=>`<div class="login"><div class="d-card"><div class="d-brand" style="color:var(--ink);padding:0 0 14px"><i></i><div>DataADO<small style="color:var(--faint)">Sign in</small></div></div>
   <label class="fld"><span>Organisation</span><select id="org"><option value="orodb">Orodb (orodb.example)</option><option value="contoso">Contoso Health (contoso.example)</option></select><span class="hint">Each organisation signs into its own Entra ID directory. No client secret is stored — ID-token-only.</span></label>
   <button class="ms" onclick="signIn()"><i><b style="background:#f25022"></b><b style="background:#7fba00"></b><b style="background:#00a4ef"></b><b style="background:#ffb900"></b></i> Sign in with your organization account</button>
   <div id="signing" class="hint" style="margin-top:12px;text-align:center"></div>
   <p class="hint" style="margin-top:18px;text-align:center">Demo: the Microsoft round-trip is simulated. You'll land as <b>SuperAdmin</b>.</p></div></div>`);
-function signIn(){ $('#signing').innerHTML='<span class="spin"></span> Redirecting to login.microsoftonline.com/'+$('#org').value+' …'; setTimeout(()=>{ $('#signing').innerHTML='<span class="spin"></span> Validating ID token · mapping directory → Strata tenant …'; },900); setTimeout(()=>{ S.signedIn=true; S.user.tenant=$('#org').value==='orodb'?'Orodb':'Contoso Health'; go('/dashboard'); flash('Signed in as '+S.user.email); },1900); }
+function signIn(){ $('#signing').innerHTML='<span class="spin"></span> Redirecting to login.microsoftonline.com/'+$('#org').value+' …'; setTimeout(()=>{ $('#signing').innerHTML='<span class="spin"></span> Validating ID token · mapping directory → DataADO tenant …'; },900); setTimeout(()=>{ S.signedIn=true; S.user.tenant=$('#org').value==='orodb'?'Orodb':'Contoso Health'; go('/dashboard'); flash('Signed in as '+S.user.email); },1900); }
 
 route(/^dashboard$/,()=>{
   const today=S.runs.filter(r=>Date.now()-r.started<864e5); const ok=today.filter(r=>r.state==='Succeeded').length, bad=today.filter(r=>r.state==='Failed').length;
@@ -830,7 +834,7 @@ function explain(rid){ const el=$('#ai-out'); el.innerHTML='<div class="ai" styl
 route(/^transfers$/,()=>shell(`<div class="page"><div class="hd"><div><h1>Transfers</h1><p class="sub">File movements across connections</p></div><button class="btn" onclick="adhoc()">＋ Ad-hoc transfer</button></div><div class="d-card"><table><tr><th>When</th><th>Source</th><th>Destination</th><th>Bytes</th><th>SHA-256</th><th>State</th></tr>${S.transfers.map(t=>`<tr><td>${t.when}</td><td class="mono">${t.src}</td><td class="mono">${t.dst}</td><td class="mono">${t.bytes.toLocaleString()}</td><td class="mono">${t.sha}</td><td>${tag(t.state)}</td></tr>`).join('')}</table></div></div>`,'<b>Transfers</b>'));
 function adhoc(){ const m=modal('Ad-hoc transfer',`<label class="fld"><span>Source connection</span><select>${S.connections.filter(c=>c.family==='file').map(c=>`<option>${c.code}</option>`)}</select></label><label class="fld"><span>Source path</span><input value="exports/orders_2026-09-18.csv"></label><label class="fld"><span>Destination connection</span><select>${S.connections.filter(c=>c.family==='file').map(c=>`<option>${c.code}</option>`)}</select></label><label class="fld"><span>Destination path</span><input value="/archive/orders.csv"></label>`,`<button class="btn" id="tgo">Transfer</button>`); $('#tgo',m).onclick=()=>{ $('#tgo',m).innerHTML='<span class="spin"></span> Transferring'; setTimeout(()=>{ S.transfers.unshift({id:'trx',when:'now',src:'BLOB-IN:/exports/orders_2026-09-18.csv',dst:'PARTNER-SFTP:/archive/orders.csv',bytes:184320,state:'Succeeded',sha:hex(4)+'…'+hex(4)}); m.remove(); flash('Transferred 184,320 bytes, checksum verified'); render(); },1600); }; }
 route(/^workers$/,()=>{ const ws=workerState(); return shell(`<div class="page"><div class="hd"><div><h1>Workers</h1><p class="sub">Hangfire processing servers reading the shared job storage</p></div></div><div class="grid g3" style="margin-bottom:14px"><div class="d-card kpi"><div class="l">Servers</div><div class="n">1</div><div class="d"><span class="d-pill ${ws==='idle'?'':'busy'}"><span class="dot"></span> ${ws}</span></div></div><div class="d-card kpi"><div class="l">Queues</div><div class="n">4</div><div class="d">workflows · transfers · ai · default</div></div><div class="d-card kpi"><div class="l">Enqueued / processing</div><div class="n">${S.runs.filter(r=>r.state==='Queued').length} / ${S.runs.filter(r=>r.state==='Running').length}</div><div class="d">invisibility timeout 30 min</div></div></div>
-  <div class="d-card"><table><tr><th>Server</th><th>Heartbeat</th><th>Workers</th><th>Queues</th><th>Started</th></tr><tr><td class="mono">strata-dev-worker:7c1e9a</td><td><span class="d-tag t-ok">3s ago</span></td><td>4</td><td><span class="d-chip">workflows</span><span class="d-chip">transfers</span><span class="d-chip">ai</span><span class="d-chip">default</span></td><td>today 02:00</td></tr></table><p class="hint" style="margin-top:12px">The Web app only enqueues; this process is the sole executor. A stuck-run reaper fails any run left <i>Running</i> past the configured timeout with no live job owning it.</p></div></div>`,'<b>Workers</b>'); });
+  <div class="d-card"><table><tr><th>Server</th><th>Heartbeat</th><th>Workers</th><th>Queues</th><th>Started</th></tr><tr><td class="mono">dataado-dev-worker:7c1e9a</td><td><span class="d-tag t-ok">3s ago</span></td><td>4</td><td><span class="d-chip">workflows</span><span class="d-chip">transfers</span><span class="d-chip">ai</span><span class="d-chip">default</span></td><td>today 02:00</td></tr></table><p class="hint" style="margin-top:12px">The Web app only enqueues; this process is the sole executor. A stuck-run reaper fails any run left <i>Running</i> past the configured timeout with no live job owning it.</p></div></div>`,'<b>Workers</b>'); });
 
 route(/^connections$/,()=>shell(`<div class="page"><div class="hd"><div><h1>Connections</h1><p class="sub">Secrets live in the credential store (Key Vault) — never in the row</p></div><a class="btn" href="#/connections/new">＋ New connection</a></div><div class="d-card"><table><tr><th>Code</th><th>Name</th><th>Protocol</th><th>Host / root</th><th>Credential</th><th>Scope</th><th>Test</th></tr>${S.connections.map(c=>`<tr class="click" onclick="go('/connections/${c.code}')"><td class="mono">${c.code}</td><td>${esc(c.name)}</td><td><span class="fam f-${c.family}"></span>${c.protocol}</td><td class="mono" style="font-size:12px">${esc(c.host)} / ${esc(c.root)}</td><td class="hint">${c.cred}</td><td>${c.project?'<span class="d-chip">'+c.project+'</span>':'<span class="d-chip">Shared</span>'}</td><td>${c.ok?'<span class="d-tag t-ok">OK</span>':'<span class="d-tag t-fail">Failing</span>'}</td></tr>`).join('')}</table></div></div>`,'<b>Connections</b>'));
 route(/^connections\/([\w-]+)$/,code=>{ const isNew=code==='new'; const c=isNew?{code:'',name:'',protocol:'Sftp',family:'file',host:'',root:'',cred:'UsernamePassword',project:'',ok:false}:S.connections.find(x=>x.code===code); if(!c) return shell('<div class="page"><h1>Not found</h1></div>','');
@@ -896,7 +900,7 @@ function aiGen(){ const b=$('#ai-go'); b.innerHTML='<span class="spin"></span> G
     <div class="row" style="margin-top:12px"><button class="btn" onclick="D.draft={draft:true,code:$('#ai-code').value,name:$('#ai-name').value,trigger:'Manual',active:true,def:JSON.parse(JSON.stringify(S.workflows.find(w=>w.code==='WF-NIGHTLY-EXTRACT').def))};D.sel=null;go('/designer/__draft__')">✎ Open in designer</button><button class="btn sec" onclick="const c=$('#ai-code').value;S.workflows.push({code:c,name:$('#ai-name').value,trigger:'Manual',active:true,def:JSON.parse(JSON.stringify(S.workflows.find(w=>w.code==='WF-NIGHTLY-EXTRACT').def))});flash('Created from JSON via the validated Create path');go('/workflows/'+c)">Create from JSON</button><button class="btn ghost" onclick="flash('Draft discarded')">Discard</button></div></div>`; },2800); }
 
 /* ── catalog ── */
-route(/^catalog$/,()=>shell(`<div class="page"><div class="hd"><div><h1>Data catalog</h1><p class="sub">Point Dataado at a database and get a map of what's inside — no values are ever read, only shape.</p></div></div><div class="d-card"><table><tr><th>Connection</th><th>Engine</th><th>Last scan</th><th>Tables</th><th></th></tr>${S.connections.filter(c=>c.family==='sql').map(c=>{const s=S.catalog.scans[c.code];return `<tr class="click" onclick="go('/catalog/${c.code}')"><td class="mono">${c.code}</td><td>${c.protocol}</td><td>${s?'<span class="d-tag t-ok">level '+s.level+' · '+s.domain+'</span>':'<span class="hint">never</span>'}</td><td>${s?s.tables.length:'—'}</td><td><a href="#/catalog/${c.code}">${s?'Browse →':'Scan →'}</a></td></tr>`}).join('')}</table></div></div>`,'<b>Data catalog</b>'));
+route(/^catalog$/,()=>shell(`<div class="page"><div class="hd"><div><h1>Data catalog</h1><p class="sub">Point DataADO at a database and get a map of what's inside — no values are ever read, only shape.</p></div></div><div class="d-card"><table><tr><th>Connection</th><th>Engine</th><th>Last scan</th><th>Tables</th><th></th></tr>${S.connections.filter(c=>c.family==='sql').map(c=>{const s=S.catalog.scans[c.code];return `<tr class="click" onclick="go('/catalog/${c.code}')"><td class="mono">${c.code}</td><td>${c.protocol}</td><td>${s?'<span class="d-tag t-ok">level '+s.level+' · '+s.domain+'</span>':'<span class="hint">never</span>'}</td><td>${s?s.tables.length:'—'}</td><td><a href="#/catalog/${c.code}">${s?'Browse →':'Scan →'}</a></td></tr>`}).join('')}</table></div></div>`,'<b>Data catalog</b>'));
 route(/^catalog\/([\w-]+)$/,code=>{ const s=S.catalog.scans[code]; if(!s) return shell(`<div class="page" style="max-width:760px"><div class="hd"><div><h1>Scan ${code}</h1><p class="sub">Metadata + optional bounded value profiling. Runs on the Worker.</p></div></div><div class="d-card"><label class="fld"><span>Scan level</span><select id="lvl"><option value="1">1 — metadata only (catalog views, no table reads)</option><option value="2" selected>2 — + value profiling (aggregates over a bounded sample; no raw values leave the DB)</option></select></label><label class="fld"><span>Domain (concept pack)</span><select id="dom"><option value="generic" ${code==='AZ-SQL'?'selected':''}>Generic business</option><option value="clinical" ${code==='ONPREM-SQL'?'selected':''}>Clinical (OMOP/FHIR-informed)</option></select></label><div class="chk"><input type="checkbox" checked> Skip empty tables (still listed in the overview)</div><div class="row"><button class="btn" id="scan-go" onclick="scan('${code}')">Start scan</button></div><div id="scan-p" style="margin-top:14px"></div></div></div>`,`<a href="#/catalog">Data catalog</a> / <b>${code}</b>`);
   const tables=s.tables; const total=tables.reduce((a,t)=>a+t.rows,0); const empty=tables.filter(t=>!t.rows).length; const max=Math.max(...tables.map(t=>t.rows));
   const tab=s.tab||'tables';
