@@ -135,11 +135,10 @@
     /* Hero */
     .hero { position:relative; padding:52px 40px 76px; overflow:hidden; }
     .hero-glow { position:absolute; top:-160px; right:-120px; width:640px; height:640px; border-radius:50%;
+      pointer-events:none;
       background:radial-gradient(circle at 30% 30%, var(--glow-a) 0%, var(--glow-b) 42%, transparent 74%);
       filter:blur(8px); opacity:var(--glow-op); animation:meshshift 16s ease-in-out infinite; }
     .hero-grid { position:relative; z-index:2; display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center; }
-    .pill { display:inline-flex; align-items:center; gap:8px; background:var(--eyebrow-bg); color:var(--eyebrow-fg);
-      font-weight:600; font-size:13px; letter-spacing:.05em; text-transform:uppercase; padding:7px 14px; border-radius:999px; }
     h1 { font-weight:700; font-size:54px; line-height:1.05; letter-spacing:-.025em; margin:22px 0 20px; }
     .lede { font-size:19px; line-height:1.6; color:var(--muted); margin:0 0 32px; max-width:540px; }
     .btn-row { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
@@ -165,6 +164,7 @@
     section { padding:16px 40px 72px; }
     .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
     .tile { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px; }
     .tile h3 { font-size:20px; margin:0 0 10px; }
     .tile p { font-size:15px; line-height:1.6; color:var(--muted); margin:0; }
@@ -218,6 +218,15 @@
 
     @media (max-width:900px) {
       .hero-grid, .grid-3, .grid-2, .cap { grid-template-columns:1fr; }
+      /* Two across, not one: four feature tiles stacked single-file is a very long scroll.
+         minmax(0,1fr) rather than 1fr: a bare 1fr is minmax(AUTO,1fr), so the track refuses to go
+         below the tile's min-content width (longest heading + padding) and the grid pushes the page
+         into horizontal scroll on a narrow phone. */
+      .grid-4 { grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+      .tile { padding:20px; }
+      /* The 640px glow is a top-right ACCENT at desktop width, but at phone width it is wider than
+         the viewport and washes the whole hero, dropping contrast on the lede. Keep it a corner. */
+      .hero-glow { width:300px; height:300px; top:-150px; right:-130px; }
       /* Do NOT hide the links here: with no hamburger to replace them a phone user
          loses every in-page destination. Wrap them onto their own row instead. */
       nav { flex-wrap:wrap; row-gap:10px; }
@@ -233,6 +242,16 @@
       .center h2, .cta h2, .spot h2 { font-size:30px; }
       section, .hero, nav, footer { padding-left:22px; padding-right:22px; }
     }
+    /* Narrow phones: two feature tiles leave too little text width to read. Go single file. */
+    @media (max-width:520px) {
+      .grid-4 { grid-template-columns:1fr; }
+      /* .gen-k's 130px min-width in a non-wrapping flex row sets a hard floor on the whole
+         AI-generation panel, which is what pushed a 320px phone into horizontal scroll.
+         Let the row wrap so the description drops under the activity name instead. */
+      .gen-step { flex-wrap:wrap; }
+      .gen-k { min-width:0; }
+    }
+
     .demo-link { position:relative; z-index:2; margin-top:22px; }
     .demo-link a { display:inline-block; font-weight:700; color:var(--spot-accent-fg); background:var(--spot-accent-bg); border:1px solid var(--spot-accent-border); padding:10px 16px; border-radius:12px; }
     .demo-link a:hover { filter:brightness(1.1); }
@@ -333,9 +352,8 @@
       <div class="hero-glow"></div>
       <div class="hero-grid">
         <div>
-          <div class="pill">MFT · ETL · Workflow · Data Catalog · AI</div>
           <h1 class="sg">Move it. Transform it.<br>Discover it. Prove it.</h1>
-          <p class="lede">DataADO moves files across SFTP, cloud and on-prem systems, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, maps what's inside unfamiliar databases, and orchestrates all of it as reliable, auditable workflows — self-hosted, so nothing leaves your network.</p>
+          <p class="lede">DataADO moves files across SFTP, cloud and on-prem systems, runs SQL-based ETL across SQL Server, Oracle, PostgreSQL and MySQL, maps what's inside unfamiliar databases, and orchestrates all of it as reliable, auditable workflows. All of it self-hosted, so nothing leaves your network.</p>
           <div class="btn-row">
             <a class="btn-primary" href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20DataADO">Get in touch →</a>
             <a class="btn-ghost" href="#how">See how it works</a>
@@ -349,9 +367,9 @@
           <div class="flow">
             <div class="flow-step"><span class="flow-num">1</span><span>File arrives on SFTP</span></div>
             <div class="flow-line"></div>
-            <div class="flow-step"><span class="flow-num">2</span><span>Decrypt · run SQL export</span></div>
+            <div class="flow-step"><span class="flow-num">2</span><span>Decrypt, run SQL export</span></div>
             <div class="flow-line"></div>
-            <div class="flow-step"><span class="flow-num">3</span><span>Upload results · notify Teams</span></div>
+            <div class="flow-step"><span class="flow-num">3</span><span>Upload results, notify Teams</span></div>
           </div>
         </div>
       </div>
@@ -381,7 +399,7 @@
 
     <!-- PLATFORM PILLARS -->
     <section id="platform" style="padding-top:24px;">
-      <div class="grid-2" style="grid-template-columns:repeat(4,1fr);gap:20px;">
+      <div class="grid-4">
         <div class="tile">
           <div class="ic" style="background:linear-gradient(135deg,var(--i1a),var(--i1b));"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--icon-fg)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></div>
           <h3 class="sg">Managed File Transfer</h3>
@@ -432,7 +450,7 @@
         <div class="spot-glow"></div>
         <div style="position:relative;z-index:2;">
           <div class="eyebrow" style="color:var(--spot-eyebrow);">How it works</div>
-          <h2 class="sg">A workflow is a directed graph of activities — read left to right.</h2>
+          <h2 class="sg">A workflow is a directed graph of activities. Read it left to right.</h2>
         </div>
         <div class="steps">
           <div class="step"><div class="step-num">01</div><div class="step-t">File arrives</div><div class="step-s">SFTP poll trigger</div></div>
@@ -546,7 +564,7 @@
     <!-- CTA -->
     <section>
       <div class="cta">
-        <h2 class="sg">Ready to see DataADO move — and map — your data?</h2>
+        <h2 class="sg">Ready to see DataADO move and map your data?</h2>
         <p>Tell us what you're moving or the database you need to understand, and we'll show you the flow.</p>
         <a href="mailto:abhishekjain_aj@outlook.com?subject=Enquiry%20for%20DataADO">Contact us →</a>
       </div>
@@ -829,6 +847,53 @@ function viewLog(rid,i){ const r=S.runs.find(x=>x.id===rid); const a=r.acts[i]; 
   const body=`<span class="k">Activity</span>  ${a.kind}  node=${a.id}  run=${rid}\n<span class="k">Started</span>   ${t.toISOString()}\n${exprs?`\n<span class="w">Resolved expressions:</span>\n${exprs}\n`:''}\n${a.state==='Failed'?`<span class="er">[ERROR] ${esc(r.err)}\nProvider: (none — value coercion failed before the load started)</span>`:`<span class="ok">[INFO]  ${esc(logLine(a))}</span>`}\n${summary?`\n<span class="w">Result summary:</span>\n${summary}`:''}\n\n<span class="k">Completed</span> ${a.state}  · ${a.state==='Failed'?'0.3s':(0.4+Math.random()*2).toFixed(1)+'s'}`;
   modal('Activity log — '+a.name,`<div class="log">${body}</div>`); }
 function logLine(a){ switch(a.kind){case 'ImportFileToTable':return `Imported 1 file(s) → ${a.out.tables[0].table}: ${a.out.totalRows} rows (create-if-not-exists, append).`;case 'LoadToTable':return `Loaded ${a.out.totalRows} rows via merge (cross-engine Oracle → SQL Server, identifiers folded).`;case 'ExportToFile':return `Exported ${a.out.totalRows} rows to ${a.out.files[0].path} (${a.out.files[0].bytes} bytes, streamed).`;case 'RunSqlScript':return `Script returned ${a.out.rowCount} row(s).`;case 'UploadFile':case 'DownloadFile':return `Transferred 1 file, ${a.out.totalBytes} bytes, checksum verified.`;case 'SendEmail':return 'Email sent via global SMTP.';case 'SendTeamsMessage':return 'Teams message posted.';case 'Loop':return 'Loop completed 3 iteration(s) over 3 item(s).';case 'Log':return a.out.message;default:return 'Completed.'} }
+/* Admin -> AI add-on -> "Test model server". Mirrors the shipped probe: three steps reported
+   individually with their own timings, and the egress guard enforced FIRST - so the demo refuses
+   exactly what the product refuses, rather than certifying an endpoint a real call would reject.
+   Timings are the ones measured live against the reference server (chat 1.0s, embedding 0.1s). */
+function epHost(ep){
+  ep=String(ep||'').trim(); var i=ep.indexOf('://'); if(i<0) return '';
+  var r=ep.slice(i+3);
+  ['/',':','?'].forEach(function(ch){ var j=r.indexOf(ch); if(j>=0) r=r.slice(0,j); });
+  return r.toLowerCase();
+}
+function isPrivateEp(ep){
+  var h=epHost(ep); if(!h) return false;
+  if(h==='localhost') return true;
+  var q=h.split('.'); if(q.length!==4) return false;
+  for(var k=0;k<4;k++){ var n=Number(q[k]); if(!(q[k].length&&Number.isInteger(n)&&n>=0&&n<=255)) return false; }
+  var a=Number(q[0]), b=Number(q[1]);
+  return a===10||a===127||(a===192&&b===168)||(a===172&&b>=16&&b<=31);
+}
+function aiTest(btn){
+  var out=$('#ai-probe'), s=S.settings.ai, rows=[];
+  btn.disabled=true;
+  var paint=function(lead,busy){ out.innerHTML='<div class="ai" style="margin-top:14px"><div class="who">'
+    +(busy?'<span class="spin"></span> ':'')+lead+'</div>'+rows.join('')+'</div>'; };
+  /* Colour is never the only signal - every row carries a tick or a cross and the step name. */
+  var row=function(ok,name,ms,detail){ rows.push('<div style="display:flex;gap:9px;align-items:baseline;padding:3px 0">'
+    +'<b style="color:var(--'+(ok?'ok':'fail')+');width:1em;flex:none">'+(ok?'✓':'✗')+'</b>'
+    +'<b>'+esc(name)+'</b><span class="hint" style="display:inline">'+ms+'</span>'
+    +'<span class="hint" style="display:inline">'+esc(detail)+'</span></div>'); };
+  paint('Testing - a cold model can take up to a minute to load.',true);
+  if(s.guard && !isPrivateEp(s.endpoint)){
+    setTimeout(function(){
+      row(false,'Configuration','4ms',s.endpoint+' is not a private/loopback address. DataADO only calls a self-hosted model.');
+      paint('Refused on configuration - no socket was opened',false);
+      btn.disabled=false;
+    },280);
+    return;
+  }
+  var steps=[['Configuration','0.0s','Endpoint '+s.endpoint,200],
+             ['Chat model','1.0s',s.model+' - answered "ok"',1000],
+             ['Embedding model','0.1s',s.embed+' - 768 dimensions',280]];
+  var i=0;
+  (function next(){
+    if(i===steps.length){ paint('Model server reachable - both models answered',false); btn.disabled=false; return; }
+    var st=steps[i++];
+    setTimeout(function(){ row(true,st[0],st[1],st[2]); paint('Testing',true); next(); }, st[3]);
+  })();
+}
 function explain(rid){ const el=$('#ai-out'); el.innerHTML='<div class="ai" style="margin-top:10px"><span class="spin"></span> Assembling context (authored config, prior step outputs, log tail, activity knowledge) → qwen2.5-coder:3b …</div>'; setTimeout(()=>{ el.innerHTML=`<div class="ai" style="margin-top:10px"><div class="who">AI explanation · local model · 2.8s</div><p><b>What happened:</b> the ImportFileToTable step declared <code>Balance</code> as <code>decimal(18,2)</code>, but row 3 of <code>customers_badvalue.csv</code> carries the literal <code>notanumber</code>. Coercion is strict by design, so the import stopped before any row was written — the target table <code>dbo.Cust_BadValue</code> was not created.</p><p><b>Likely cause:</b> a hand-edited source file, or an upstream export that writes a placeholder instead of NULL.</p><p><b>Fix:</b> either add <code>notanumber</code> to the step's <b>Null tokens</b> so it loads as NULL, or correct the file. If the value must be kept, change the column type to <code>string</code>.</p><p class="hint">Context was redacted before it reached the model; this explanation is stored on the run for later retrieval.</p></div>`; },2600); }
 
 route(/^transfers$/,()=>shell(`<div class="page"><div class="hd"><div><h1>Transfers</h1><p class="sub">File movements across connections</p></div><button class="btn" onclick="adhoc()">＋ Ad-hoc transfer</button></div><div class="d-card"><table><tr><th>When</th><th>Source</th><th>Destination</th><th>Bytes</th><th>SHA-256</th><th>State</th></tr>${S.transfers.map(t=>`<tr><td>${t.when}</td><td class="mono">${t.src}</td><td class="mono">${t.dst}</td><td class="mono">${t.bytes.toLocaleString()}</td><td class="mono">${t.sha}</td><td>${tag(t.state)}</td></tr>`).join('')}</table></div></div>`,'<b>Transfers</b>'));
@@ -939,7 +1004,7 @@ route(/^admin\/settings\/(\w+)$/,k=>{ const s=S.settings; const pages={
   worker:['Worker settings','Read by the Worker at startup — restart-gated.',`<div class="grid g2"><label class="fld"><span>Hangfire invisibility timeout (min)</span><input value="${s.worker.invis}"><span class="hint">Raise for transfers longer than this, or a second worker may re-dispatch a running job.</span></label><label class="fld"><span>Stuck-run timeout (min)</span><input value="${s.worker.stuck}"><span class="hint">The reaper fails a run left Running past this with no live job owning it. Live, no restart.</span></label></div><button class="btn" onclick="flash('Saved — the invisibility timeout applies after the Worker restarts')">Save</button>`],
   logstorage:['Log storage','Where per-activity log files go. The Worker probes this every 5 minutes.',`<div class="row" style="margin-bottom:12px"><span class="d-pill"><span class="dot"></span> Health: ${s.log.health} (Worker probe)</span></div><div class="grid g2"><label class="fld"><span>Protocol</span><select><option>AzureBlob</option><option>Sftp</option><option>S3</option><option>LocalPath</option></select></label><label class="fld"><span>Root / container</span><input value="${s.log.root}"></label><label class="fld"><span>Retention (days)</span><input value="${s.log.retention}"></label><label class="fld"><span>Secret</span><input type="password" value="••••••••"></label></div><button class="btn" onclick="flash('Log storage saved (audited, secret excluded)')">Save</button>`],
   opsalerts:['Ops alerts','Platform alerting on every failed run and on stuck-run reaping.',`<div class="grid g2"><label class="fld"><span>Email recipients</span><input value="${s.ops.email}"></label><label class="fld"><span>Teams webhook URL</span><input value="" placeholder="https://…webhook.office.com/…"></label></div><button class="btn" onclick="flash('Ops alerts saved')">Save</button>`],
-  ai:['AI add-on','Self-hosted inference only. Two switches: this platform master switch AND a per-tenant entitlement. Both default off; with either off the feature disappears (404, not 403).',`<div class="chk"><input type="checkbox" ${s.ai.enabled?'checked':''} onchange="S.settings.ai.enabled=this.checked;flash('Platform AI switch '+(this.checked?'ON':'OFF — every tenant hidden, entitlements kept'))"> Platform master switch</div><div class="grid g2"><label class="fld"><span>Model endpoint (private address)</span><input value="${s.ai.endpoint}"><span class="hint">Endpoint guard: public/DNS names are rejected unless you deliberately untick the guard (audited).</span></label><label class="fld"><span>Chat model</span><input value="${s.ai.model}"><span class="hint">3B-class fits 4 GB VRAM — 51.8 tok/s measured; a 7B spills to CPU at 5 tok/s.</span></label><label class="fld"><span>Embedding model</span><input value="${s.ai.embed}"></label><label class="fld"><span>Timeout (s)</span><input value="60"></label></div><div class="chk"><input type="checkbox" ${s.ai.guard?'checked':''}> Enforce private-endpoint guard</div><div class="row"><button class="btn sec" onclick="flash('Ping: qwen2.5-coder:3b responded in 380 ms')">Ping model</button><button class="btn" onclick="flash('AI settings saved (audited)')">Save</button></div>`] };
+  ai:['AI add-on','Self-hosted inference only. Two switches: this platform master switch AND a per-tenant entitlement. Both default off; with either off the feature disappears (404, not 403).',`<div class="chk"><input type="checkbox" ${s.ai.enabled?'checked':''} onchange="S.settings.ai.enabled=this.checked;flash('Platform AI switch '+(this.checked?'ON':'OFF — every tenant hidden, entitlements kept'))"> Platform master switch</div><div class="grid g2"><label class="fld"><span>Model endpoint (private address)</span><input value="${s.ai.endpoint}" oninput="S.settings.ai.endpoint=this.value"><span class="hint">Endpoint guard: public/DNS names are rejected unless you deliberately untick the guard (audited).</span></label><label class="fld"><span>Chat model</span><input value="${s.ai.model}"><span class="hint">3B-class fits 4 GB VRAM — 51.8 tok/s measured; a 7B spills to CPU at 5 tok/s.</span></label><label class="fld"><span>Embedding model</span><input value="${s.ai.embed}"></label><label class="fld"><span>Timeout (s)</span><input value="60"></label><label class="fld"><span>Concept-match threshold</span><input value="0.75"><span class="hint">Cosine floor for an AI catalog concept match. Model-dependent: nomic-embed-text puts even correct matches at 0.75–0.77.</span></label></div><div class="chk"><input type="checkbox" ${s.ai.guard?'checked':''} onchange="S.settings.ai.guard=this.checked"> Enforce private-endpoint guard</div><div class="row"><button class="btn" onclick="flash('AI settings saved (audited)')">Save settings</button><button class="btn sec" onclick="aiTest(this)">Test model server</button><span class="hint">Round-trips the endpoint with these values. Does not save.</span></div><div id="ai-probe"></div>`] };
   const p=pages[k]||pages.email; return A(`<div class="page" style="max-width:860px"><div class="hd"><div><h1>${p[0]}</h1><p class="sub">${p[1]}</p></div></div><div class="d-card">${p[2]}</div></div>`,`<b>${p[0]}</b>`); });
 
 
