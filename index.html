@@ -430,6 +430,7 @@
         <h2 class="sg">Everything the flow needs, in one place</h2>
       </div>
       <div class="cap">
+        <div class="tile"><h4 class="sg">Database migration</h4><p>Move many tables between instances — same engine or across SQL&nbsp;Server, Oracle, PostgreSQL and MySQL. Pick the tables, and see <strong>what will break before anything moves</strong>: folded identifiers, types that cannot survive the trip, and the ones DataADO refuses outright. Keys, indexes and same-engine procedures come across with the data.</p></div>
         <div class="tile"><h4 class="sg">Visual workflow designer</h4><p>Build top-to-bottom flows with per-activity forms, connection pickers, loop &amp; condition boxes, and a live JSON view.</p></div>
         <div class="tile"><h4 class="sg">Schedule · file · webhook triggers</h4><p>Run on a cron schedule, the moment a file lands, or from an inbound token-authed webhook.</p></div>
         <div class="tile"><span class="tag">New</span><h4 class="sg">Columnar in and out</h4><p>Read <strong>Parquet</strong> straight into a database table, and export any query back out to <strong>Parquet</strong> with real column types, not stringified CSV. CSV, TSV, XLSX and JSON import too. Memory stays bounded either way, so the row count is not the limit.</p></div>
@@ -659,6 +660,7 @@ const S = {
   catalog: {
     scans: {},   // conn -> { level, domain, tables:[...] }
   },
+  mig: { src:'', dst:'', tables: [] },
   pgp: [ { name: 'partner-public-key', kind: 'Public key', set: '2026-08-02' }, { name: 'orodb-private-key', kind: 'Private key', set: '2026-08-02' }, { name: 'orodb-passphrase', kind: 'Passphrase', set: '2026-08-02' } ],
   tenants: [ { code: 'ORODB', name: 'Orodb', ai: true, active: true, projects: 2, users: 4 }, { code: 'CONTOSO', name: 'Contoso Health', ai: false, active: true, projects: 1, users: 2 } ],
   projects: [ { code: 'SAMPLE', name: 'Sample project', tenant: 'ORODB', wfs: 5 }, { code: 'FINANCE', name: 'Finance', tenant: 'ORODB', wfs: 3 }, { code: 'CLINICAL', name: 'Clinical DW', tenant: 'CONTOSO', wfs: 2 } ],
@@ -772,7 +774,7 @@ function shell(content,crumb,area='dash'){
   const dashNav=`<div class="grp">Operate</div>
     <a href="#/dashboard" class="${on('dashboard')}">${ic('dash')} Dashboard</a><a href="#/runs" class="${on('runs')}">${ic('runs')} Runs</a><a href="#/transfers" class="${on('transfers')}">${ic('tr')} Transfers</a><a href="#/workers" class="${on('workers')}">${ic('wk')} Workers</a>
     <div class="grp">Design</div>
-    <a href="#/workflows" class="${on('workflows')||on('designer')||on('ai')}">${ic('wf')} Workflows</a><a href="#/connections" class="${on('connections')}">${ic('cn')} Connections</a><a href="#/catalog" class="${on('catalog')}">${ic('db')} Data catalog</a><a href="#/lineage" class="${on('lineage')}">${ic('ln')} Data lineage</a><a href="#/pgp" class="${on('pgp')}">${ic('key')} PGP keys</a>
+    <a href="#/workflows" class="${on('workflows')||on('designer')||on('ai')}">${ic('wf')} Workflows</a><a href="#/connections" class="${on('connections')}">${ic('cn')} Connections</a><a href="#/catalog" class="${on('catalog')}">${ic('db')} Data catalog</a><a href="#/lineage" class="${on('lineage')}">${ic('ln')} Data lineage</a><a href="#/migration" class="${on('migration')}">${ic('tr')} Migrate database</a><a href="#/pgp" class="${on('pgp')}">${ic('key')} PGP keys</a>
     <div class="grp">Platform</div><a href="#/admin/tenants">${ic('adm')} Administration</a>`;
   const adminNav=`<div class="grp">Administration</div>
     <a href="#/admin/tenants" class="${on('admin/tenants')}">${ic('db')} Tenants</a><a href="#/admin/projects" class="${on('admin/projects')}">${ic('wf')} Projects</a><a href="#/admin/users" class="${on('admin/users')}">${ic('cn')} Users &amp; roles</a><a href="#/admin/audit" class="${on('admin/audit')}">${ic('au')} Audit log</a>
@@ -965,6 +967,181 @@ function aiGen(){ const b=$('#ai-go'); b.innerHTML='<span class="spin"></span> G
     <div class="row" style="margin-top:12px"><button class="btn" onclick="D.draft={draft:true,code:$('#ai-code').value,name:$('#ai-name').value,trigger:'Manual',active:true,def:JSON.parse(JSON.stringify(S.workflows.find(w=>w.code==='WF-NIGHTLY-EXTRACT').def))};D.sel=null;go('/designer/__draft__')">✎ Open in designer</button><button class="btn sec" onclick="const c=$('#ai-code').value;S.workflows.push({code:c,name:$('#ai-name').value,trigger:'Manual',active:true,def:JSON.parse(JSON.stringify(S.workflows.find(w=>w.code==='WF-NIGHTLY-EXTRACT').def))});flash('Created from JSON via the validated Create path');go('/workflows/'+c)">Create from JSON</button><button class="btn ghost" onclick="flash('Draft discarded')">Discard</button></div></div>`; },2800); }
 
 /* ── catalog ── */
+/* ───────────────────────── Migrate database ─────────────────────────
+   Mirrors MigrationCompatibilityAnalyzer. Every finding CODE and severity below is one the real
+   analyzer produces, and the rules are the same rules — so clicking a different source/destination
+   pair gives a genuinely correct answer rather than a canned one. Keeping this honest matters: a demo
+   that shows a capability the product does not have is the worst thing on the finish-bar list. */
+
+const ENG = { SqlServer: 'SqlServer', Oracle: 'Oracle', PostgreSql: 'PostgreSql', MySql: 'MySql' };
+
+function engOf(code){ const c=S.connections.find(x=>x.code===code); return c?c.protocol:'SqlServer'; }
+
+/* Oracle folds UP, PostgreSQL folds DOWN, MySQL and SQL Server keep what they are given. */
+function fold(id, dest){
+  if(dest===ENG.Oracle) return id.toUpperCase();
+  if(dest===ENG.PostgreSql) return id.toLowerCase();
+  return id;
+}
+
+/* The engine-neutral type the catalog would record, derived from the native spelling. */
+function normType(native){
+  const t=String(native||'').toLowerCase();
+  if(t.indexOf('sql_variant')>=0||t.indexOf('hierarchyid')>=0||t.indexOf('geography')>=0) return 'Unknown';
+  if(t.indexOf('bit')===0) return 'Boolean';
+  if(t==='date') return 'Date';
+  if(t.indexOf('datetime')>=0||t.indexOf('timestamp')>=0) return 'DateTime';
+  if(t.indexOf('decimal')>=0||t.indexOf('numeric')>=0||t.indexOf('money')>=0) return 'Decimal';
+  if(t.indexOf('varbinary')>=0||t.indexOf('blob')>=0) return 'LargeBinary';
+  if(t.indexOf('uniqueidentifier')>=0) return 'Guid';
+  if(t.indexOf('int')>=0) return 'Integer';
+  if(t.indexOf('max')>=0||t.indexOf('text')>=0||t.indexOf('clob')>=0) return 'LongText';
+  if(t.indexOf('char')>=0) return 'Text';
+  return 'Text';
+}
+function textLen(native){ const m=/\((\d+)\)/.exec(String(native||'')); return m?+m[1]:null; }
+
+const ORA_BUILTINS = ['UID','LEVEL','SIZE','ROWID','ROWNUM','USER','DATE','COMMENT'];
+
+/* Returns { table, destName, findings:[{sev,code,col,msg}] } for one table. */
+function analyseTable(t, src, dst){
+  const f=[], cross = src!==dst;
+  const bare = fold(t.name, dst);
+  const schemaDropped = cross && dst===ENG.MySql && t.schema;
+  const destName = (!schemaDropped && t.schema) ? fold(t.schema,dst)+'.'+bare : bare;
+
+  if(cross && bare!==t.name)
+    f.push({sev:'warn',code:'identifier-folded',msg:`The table will be created as <b>${esc(bare)}</b> on ${dst}, not ${esc(t.name)}. ${dst} folds unquoted identifiers, so DataADO folds the name to match — otherwise no ordinary unquoted query could reach it.`});
+
+  const pk = t.cols.filter(c=>/identifier/.test(c[2]));
+  if(pk.length===0)
+    f.push({sev:'info',code:'no-primary-key',msg:'No primary key. The table migrates fine with append or truncate-and-load, but upsert and merge need key columns.'});
+
+  t.cols.forEach(c=>{
+    const name=c[0], native=c[1], nt=normType(native);
+    if(cross && nt==='Unknown')
+      f.push({sev:'block',code:'type-unsupported',col:name,msg:`<code>${esc(native)}</code> has no faithful equivalent on ${dst}. This is usually an engine-proprietary type. CAST it to a portable type in the source query, or exclude the column — guessing here would silently corrupt the value.`});
+    if(!cross) return;
+    if(nt==='Boolean' && dst===ENG.Oracle)
+      f.push({sev:'warn',code:'boolean-to-oracle',col:name,msg:'Oracle has no boolean column type. This becomes NUMBER(1) storing 1/0 and reads back as a NUMBER, not a boolean.'});
+    if(nt==='Date' && dst===ENG.Oracle)
+      f.push({sev:'warn',code:'date-to-oracle',col:name,msg:'Oracle DATE always carries a time component, so a pure date gains 00:00:00 and the column no longer distinguishes date from date-and-time.'});
+    const len=textLen(native);
+    if((nt==='Text'||nt==='LongText') && dst===ENG.Oracle && (nt==='LongText'||(len&&len>2000)))
+      f.push({sev:'info',code:'text-becomes-clob',col:name,msg:'Longer than Oracle’s 2000-character NVARCHAR2 limit (4000 bytes over AL16UTF16), so it becomes a CLOB. No data is lost; CLOBs are slower to query.'});
+    if(nt==='Decimal' && src===ENG.Oracle)
+      f.push({sev:'warn',code:'decimal-rounding',col:name,msg:'Oracle does not report precision/scale through the provider, so this lands in the wide DECIMAL(38,10) fallback and a value with more than 10 decimal places is SILENTLY ROUNDED.'});
+    if(dst===ENG.Oracle && ORA_BUILTINS.indexOf(fold(name,dst))>=0)
+      f.push({sev:'warn',code:'oracle-builtin-collision',col:name,msg:`<b>${esc(fold(name,dst))}</b> collides with an Oracle built-in. The load quotes identifiers so it is correct — but an ad-hoc UNQUOTED query against the migrated table resolves to the built-in and returns nonsense instead of erroring.`});
+  });
+
+  return { table:t, destName, findings:f, blocked:f.some(x=>x.sev==='block') };
+}
+
+/* Reported ONCE PER SCHEMA, not once per table: per-table reads fine for two tables and becomes
+   fifty identical warnings for fifty, burying the per-column findings that actually differ. */
+function schemaFindings(tables, src, dst){
+  if(src===dst) return [];
+  const seen={}, out=[];
+  tables.forEach(t=>{
+    if(!t.schema || seen[t.schema.toLowerCase()]) return;
+    seen[t.schema.toLowerCase()]=1;
+    if(dst===ENG.MySql)
+      out.push({sev:'info',code:'schema-dropped-mysql',msg:`MySQL has no schema separate from the database, so <b>${esc(t.schema)}</b> is dropped and those tables are created in the database the destination connection points at.`});
+    else
+      out.push({sev:'warn',code:'schema-must-exist',msg:dst===ENG.Oracle
+        ? `Keeping the source schema requires a <b>USER</b> named ${esc(fold(t.schema,dst))} to already exist on Oracle (in Oracle a schema IS a user) — DataADO creates tables, not schemas. Create it first, or untick “Keep the source schema name”.`
+        : `Keeping the source schema requires a schema named <b>${esc(fold(t.schema,dst))}</b> to already exist on ${dst} — DataADO creates tables, not schemas. Create it first, or untick “Keep the source schema name”.`});
+  });
+  return out;
+}
+
+const SEVW = { block:'Blocker', warn:'Warning', info:'Note' };
+const SEVC = { block:'t-fail', warn:'t-warn', info:'t-mute' };
+
+route(/^migration$/,()=>{
+  const sql=S.connections.filter(c=>c.family==='sql');
+  const opts=t=>sql.map(c=>`<option value="${c.code}" ${S.mig[t]===c.code?'selected':''}>${c.code} — ${c.protocol}</option>`).join('');
+  return shell(`<div class="page" style="max-width:860px"><div class="hd"><div><h1>Migrate a database</h1>
+    <p class="sub">Move tables between instances — the same engine, or across engines — and see what will break before anything moves.</p></div></div>
+    <div class="d-card">
+      <div class="grid g2">
+        <label class="fld"><span>Source</span><select onchange="S.mig.src=this.value;render()"><option value="">Choose…</option>${opts('src')}</select>
+          <span class="hint">Must have been scanned in Data catalog — the table list and the report are built from that scan, not a live connection.</span></label>
+        <label class="fld"><span>Destination</span><select onchange="S.mig.dst=this.value;render()"><option value="">Choose…</option>${opts('dst')}</select>
+          <span class="hint">ODBC connections can be a source but never a destination — writing needs the SQL dialect behind the driver.</span></label>
+      </div>
+      <div class="row"><button class="btn" ${(!S.mig.src||!S.mig.dst)?'disabled':''} onclick="go('/migration/'+S.mig.src+'/'+S.mig.dst)">Choose tables</button></div>
+    </div></div>`,'<b>Migrate database</b>');
+});
+
+route(/^migration\/([\w-]+)\/([\w-]+)$/,(src,dst)=>{
+  const scan=S.catalog.scans[src];
+  if(!scan) return shell(`<div class="page" style="max-width:760px"><div class="hd"><div><h1>Choose tables</h1><p class="sub">${src} → ${dst}</p></div></div>
+    <div class="d-card"><p><b>${src} has no catalog scan yet.</b> The table list is built from a scan rather than a live connection, so scan it first.</p>
+    <div class="row"><a class="btn" href="#/catalog/${src}">Scan ${src}</a><a class="btn sec" href="#/migration">Back</a></div></div></div>`,
+    `<a href="#/migration">Migrate database</a> / <b>${src} → ${dst}</b>`);
+
+  const se=engOf(src), de=engOf(dst);
+  const sel=S.mig.tables;
+  const plans=scan.tables.filter(t=>sel.indexOf(t.name)>=0).map(t=>analyseTable(t,se,de));
+  const general=schemaFindings(plans.map(p=>p.table),se,de);
+  const all=plans.reduce((a,p)=>a.concat(p.findings),general.slice());
+  const blockers=all.filter(f=>f.sev==='block').length, warns=all.filter(f=>f.sev==='warn').length;
+  const runnable=plans.filter(p=>!p.blocked).length;
+
+  const rows=scan.tables.map(t=>`<tr>
+    <td><input type="checkbox" ${sel.indexOf(t.name)>=0?'checked':''} onchange="migPick('${t.name}',this.checked)"></td>
+    <td><b class="mono">${t.schema}.${t.name}</b></td><td class="mono">${t.cols.length}</td>
+    <td class="mono">${t.rows?'~'+t.rows.toLocaleString():'<span class="hint">empty</span>'}</td></tr>`).join('');
+
+  const report = plans.length===0 ? '<p class="hint">Select one or more tables to see what will happen to them.</p>' :
+    `<div class="overview"><div><b>${plans.length}</b>selected</div><div><b>${runnable}</b>will migrate</div>
+       <div><b>${blockers}</b>blocker${blockers===1?'':'s'}</div><div><b>${warns}</b>warning${warns===1?'':'s'}</div></div>
+     ${general.map(f=>`<div style="padding:4px 0;font-size:12.5px"><span class="d-tag ${SEVC[f.sev]}">${SEVW[f.sev]}</span> ${f.msg}</div>`).join('')}
+     <table style="margin-top:10px"><tr><th>Table</th><th>Becomes</th><th>Findings</th></tr>
+     ${plans.map(p=>`<tr><td><b class="mono">${p.table.schema}.${p.table.name}</b>${p.blocked?'<div><span class="d-tag t-fail">Excluded</span></div>':''}</td>
+       <td class="mono">${esc(p.destName)}</td>
+       <td>${p.findings.length===0?'<span class="hint">Carries across unchanged.</span>':
+         p.findings.map(f=>`<div style="padding:3px 0;font-size:12.5px"><span class="d-tag ${SEVC[f.sev]}">${SEVW[f.sev]}</span> ${f.col?`<span class="mono">${esc(f.col)}</span> — `:''}${f.msg}</div>`).join('')}</td></tr>`).join('')}
+     </table>
+     <div class="row" style="margin-top:14px">
+       <button class="btn" ${runnable===0?'disabled':''} onclick="migGenerate('${src}','${dst}')">Generate workflow for ${runnable} table${runnable===1?'':'s'}</button>
+       <span class="hint">Nothing is migrated here. This creates a workflow you review, then run.</span>
+     </div>`;
+
+  return shell(`<div class="page"><div class="hd"><div><h1>Choose tables</h1><p class="sub">${src} (${se}) → ${dst} (${de})</p></div>
+      <a class="btn sec" href="#/migration">Change</a></div>
+    <div class="grid g2"><div class="d-card"><h2>Tables</h2><table><tr><th></th><th>Table</th><th>Cols</th><th>Rows (est.)</th></tr>${rows}</table></div>
+    <div class="d-card"><h2>Compatibility</h2>${report}</div></div></div>`,
+    `<a href="#/migration">Migrate database</a> / <b>${src} → ${dst}</b>`);
+});
+
+function migPick(name,on){
+  const i=S.mig.tables.indexOf(name);
+  if(on&&i<0) S.mig.tables.push(name); else if(!on&&i>=0) S.mig.tables.splice(i,1);
+  render();
+}
+
+/* One LoadToTable step per table, chained by edges, then a keys/indexes step — the same shape
+   MigrationWorkflowBuilder produces, which is why each table gets its own run-report row and
+   REL-4 resume skips the ones that already succeeded. */
+function migGenerate(src,dst){
+  const scan=S.catalog.scans[src], se=engOf(src), de=engOf(dst);
+  const plans=scan.tables.filter(t=>S.mig.tables.indexOf(t.name)>=0).map(t=>analyseTable(t,se,de)).filter(p=>!p.blocked);
+  const nodes=plans.map((p,i)=>({ id:'t'+(i+1), kind:'LoadToTable', name:'Migrate '+p.table.schema+'.'+p.table.name,
+    config:{ sourceConnectionCode:src, query:'SELECT '+p.table.cols.map(c=>'['+c[0]+']').join(', ')+' FROM ['+p.table.schema+'].['+p.table.name+']',
+             destinationConnectionCode:dst, targetTable:p.destName, writeMode:'truncateAndLoad', createIfNotExists:true } }));
+  nodes.push({ id:'keys', kind:'RunSqlScript', name:'Recreate keys and indexes',
+    config:{ connectionCode:dst, script:'-- PRIMARY KEY and CREATE INDEX statements for the migrated tables,\n-- run after the data so the bulk load is not slowed by maintaining indexes per row.' } });
+  const edges=nodes.slice(1).map((n,i)=>({from:nodes[i].id,to:n.id}));
+  const code='MIGRATE-'+src+'-TO-'+dst;
+  S.workflows.push({ code, name:'Migrate '+src+' → '+dst, trigger:'Manual', active:true,
+    def:{ startNodeId:nodes[0].id, edges, nodes } });
+  flash('Workflow '+code+' generated for '+plans.length+' table(s) (audited) — review it, then run');
+  go('/designer/'+code);
+}
+
 route(/^catalog$/,()=>shell(`<div class="page"><div class="hd"><div><h1>Data catalog</h1><p class="sub">Point DataADO at a database and get a map of what's inside — no values are ever read, only shape.</p></div></div><div class="d-card"><table><tr><th>Connection</th><th>Engine</th><th>Last scan</th><th>Tables</th><th></th></tr>${S.connections.filter(c=>c.family==='sql').map(c=>{const s=S.catalog.scans[c.code];return `<tr class="click" onclick="go('/catalog/${c.code}')"><td class="mono">${c.code}</td><td>${c.protocol}</td><td>${s?'<span class="d-tag t-ok">level '+s.level+' · '+s.domain+'</span>':'<span class="hint">never</span>'}</td><td>${s?s.tables.length:'—'}</td><td><a href="#/catalog/${c.code}">${s?'Browse →':'Scan →'}</a></td></tr>`}).join('')}</table></div></div>`,'<b>Data catalog</b>'));
 route(/^catalog\/([\w-]+)$/,code=>{ const s=S.catalog.scans[code]; if(!s) return shell(`<div class="page" style="max-width:760px"><div class="hd"><div><h1>Scan ${code}</h1><p class="sub">Metadata + optional bounded value profiling. Runs on the Worker.</p></div></div><div class="d-card"><label class="fld"><span>Scan level</span><select id="lvl"><option value="1">1 — metadata only (catalog views, no table reads)</option><option value="2" selected>2 — + value profiling (aggregates over a bounded sample; no raw values leave the DB)</option></select></label><label class="fld"><span>Domain (concept pack)</span><select id="dom"><option value="generic" ${code==='AZ-SQL'?'selected':''}>Generic business</option><option value="clinical" ${code==='ONPREM-SQL'?'selected':''}>Clinical (OMOP/FHIR-informed)</option></select></label><div class="chk"><input type="checkbox" checked> Skip empty tables (still listed in the overview)</div><div class="row"><button class="btn" id="scan-go" onclick="scan('${code}')">Start scan</button></div><div id="scan-p" style="margin-top:14px"></div></div></div>`,`<a href="#/catalog">Data catalog</a> / <b>${code}</b>`);
   const tables=s.tables; const total=tables.reduce((a,t)=>a+t.rows,0); const empty=tables.filter(t=>!t.rows).length; const max=Math.max(...tables.map(t=>t.rows));
