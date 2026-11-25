@@ -239,8 +239,9 @@
       :root[data-theme="dark"] .brand .brand-mark.on-dark  { display:block !important; }
       .nav-links a:not(.nav-cta) { font-size:14px; }
       .nav-cta { order:2; margin-left:auto; }
-      h1 { font-size:40px; }
-      .center h2, .cta h2, .spot h2 { font-size:30px; }
+      /* h1 / h2 sizes moved to the fluid clamp() in the MOBILE + TOUCH LAYER below.
+         Leaving fixed sizes here would be dead code: that block comes later in the
+         sheet with equal specificity, so it wins at every width. */
       section, .hero, nav, footer { padding-left:22px; padding-right:22px; }
     }
     /* Narrow phones: two feature tiles leave too little text width to read. Go single file. */
@@ -314,7 +315,141 @@
 @keyframes in{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}#dm .modal-bg{position:fixed;inset:0;background:rgba(10,12,30,.5);z-index:70;display:grid;place-items:center;padding:20px}#dm .modal{background:var(--raised);border-radius:14px;width:min(900px,100%);max-height:90vh;overflow:auto;box-shadow:var(--shadow);border:1px solid var(--line)}#dm .modal .mh{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line)}#dm .modal .mb{padding:18px}#dm .log{background:#0b1220;color:#d5deef;border-radius:10px;padding:14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;white-space:pre-wrap;line-height:1.55;overflow:auto;max-height:60vh}#dm .log .k{color:#7dd3fc}#dm .log .ok{color:#6ee7b7}#dm .log .er{color:#fca5a5}#dm .log .w{color:#fcd34d}#dm .log .m{color:#8fa1bf}#dm .empty{padding:30px;text-align:center;color:var(--faint);border:1px dashed var(--line2);border-radius:10px}#dm .spin{display:inline-block;width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:rot .7s linear infinite;vertical-align:-2px}
 @keyframes rot{to{transform:rotate(360deg)}}#dm .bar{height:8px;background:var(--sunk);border-radius:99px;overflow:hidden}#dm .bar i{display:block;height:100%;background:var(--pri);transition:width .4s}#dm .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px}#dm .tabs a{padding:8px 12px;color:var(--soft);border-bottom:2px solid transparent;margin-bottom:-1px}#dm .tabs a.on{color:var(--pri);border-color:var(--pri)}#dm .tabs a:hover{text-decoration:none}#dm .tl{list-style:none;margin:0;padding:0}#dm .tl li{display:grid;grid-template-columns:28px 1fr auto;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center}#dm .tl .st{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700}#dm .st.ok{background:var(--ok-bg);color:var(--ok)}#dm .st.run{background:var(--info-bg);color:var(--info)}#dm .st.fail{background:var(--fail-bg);color:var(--fail)}#dm .st.wait{background:var(--sunk);color:var(--faint)}#dm .st.run .spin{width:11px;height:11px}#dm .login{min-height:100vh;display:grid;place-items:center;padding:40px 20px 20px;background:var(--paper)}#dm .login .d-card{width:420px;max-width:100%;padding:28px}#dm .ms{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:10px;border:1px solid var(--line2);background:var(--raised);border-radius:8px;font-weight:600}#dm .ms i{width:16px;height:16px;display:grid;grid-template-columns:1fr 1fr;gap:1px}#dm .ms i b{display:block}#dm .des{display:grid;grid-template-columns:220px 1fr 340px;gap:0;height:calc(100vh - 30px - 53px)}#dm .des>div{overflow:auto}#dm .pal{border-right:1px solid var(--line);padding:12px;background:var(--raised)}#dm .pal h3{margin:12px 0 6px}#dm .pal .it{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:grab;font-size:13px;border:1px solid transparent}#dm .pal .it:hover{background:var(--ghost);border-color:var(--line)}#dm .canvas{padding:24px;background:var(--paper)}#dm .d-flow{max-width:520px;margin:0 auto}#dm .d-step{background:var(--raised);border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow);cursor:pointer;position:relative}#dm .d-step.on{outline:2px solid var(--pri)}#dm .d-step .k{font-size:11px;color:var(--faint);letter-spacing:.05em;text-transform:uppercase}#dm .d-step .n{font-weight:600}#dm .d-step .band{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;color:var(--faint);margin-top:4px}#dm .d-step .x{position:absolute;right:8px;top:8px;border:0;background:transparent;color:var(--faint)}#dm .ins{display:flex;justify-content:center;padding:6px 0}#dm .ins button{border:1px dashed var(--line2);background:var(--paper);color:var(--faint);border-radius:999px;width:26px;height:26px;font-size:15px;line-height:1}#dm .ins button:hover{color:var(--pri);border-color:var(--pri)}#dm .box{border:1.5px dashed var(--flow);border-radius:12px;padding:10px;margin-top:8px;background:rgba(15,118,110,.04)}#dm .box .bh{font-size:11px;color:var(--flow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}#dm .props{border-left:1px solid var(--line);padding:14px;background:var(--raised)}#dm .props .ph{font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}#dm .cols{display:grid;grid-template-columns:1.2fr 1.2fr .9fr 36px .8fr 24px;gap:4px;font-size:12px;align-items:center}#dm .cols input,#dm .cols select{padding:4px 6px;font-size:12px}#dm .cols .h{font-size:10.5px;color:var(--soft);text-transform:uppercase;letter-spacing:.05em}#dm .msg{font-size:12px;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--sunk);margin-top:6px}#dm .msg.ok{border-color:var(--ok)}#dm .msg.bad{border-color:var(--fail);color:var(--fail)}#dm .sugg{position:absolute;z-index:9;background:var(--raised);border:1px solid var(--line2);border-radius:8px;box-shadow:var(--shadow);max-height:180px;overflow:auto;width:300px}#dm .sugg div{padding:6px 10px;font-size:12px;cursor:pointer}#dm .sugg div:hover{background:var(--ghost)}#dm .sugg .p{font-family:ui-monospace,Menlo,monospace;color:var(--pri)}#dm .json{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:var(--sunk);padding:12px;border-radius:8px;overflow:auto;white-space:pre}#dm .matrix td.num{text-align:center;font-weight:600}#dm .role-r{color:var(--info)}#dm .role-w{color:var(--warn)}#dm .role-rw{color:var(--fail)}#dm .ai{background:var(--ghost);border:1px solid var(--line);border-radius:12px;padding:14px}#dm .ai .who{font-weight:700;color:var(--ai);font-size:12px;letter-spacing:.06em;text-transform:uppercase}#dm .overview{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}#dm .overview div{background:var(--sunk);border-radius:10px;padding:10px 12px}#dm .overview b{font-size:20px;display:block}#dm .tbar{display:flex;align-items:center;gap:8px;font-size:12px}#dm .tbar .bar{flex:1}
 
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       MOBILE + TOUCH LAYER (2026-11-25)
+
+       Reported: the site reads as a desktop page on a phone. It did. The viewport
+       meta tag was present and nothing overflowed, which is what an earlier pass
+       measured and wrongly treated as "mobile is fine" - no horizontal scroll is
+       necessary but nowhere near sufficient. What was actually missing:
+
+         - no phone breakpoint at all (900px then 520px, nothing tuned for ~390px);
+         - no mobile NAVIGATION: a prior comment in this file admits there was "no
+           hamburger", so six links were left to wrap into a desktop-style row;
+         - no fluid type: every heading was a fixed px size, up to 54px;
+         - the embedded demo had ONE breakpoint (900px) which still left two-column
+           grids, a 220px/1fr/340px three-pane designer, a four-column overview, a
+           six-column import editor and uncollapsed data tables.
+
+       Platform behaviour is keyed on VIEWPORT and INPUT CAPABILITY, never on
+       sniffing the user agent: a UA string is unreliable and says nothing about
+       window size, while (pointer:coarse) / (hover:none) describe what the user
+       actually has in their hand.
+       ══════════════════════════════════════════════════════════════════════════ */
+
+    /* Fluid headings. Fixed px meant a 54px hero on a 390px screen. clamp() keeps
+       the desktop size as the ceiling, so wide layouts are unchanged. */
+    h1 { font-size: clamp(30px, 4.6vw, 54px); line-height: 1.1; }
+    .center h2, .cta h2, .spot h2 { font-size: clamp(23px, 3.4vw, 38px); line-height: 1.18; }
+    h2 { line-height: 1.2; }
+    /* Long product nouns (PostgreSQL, orchestration) are the usual cause of a
+       heading pushing past a narrow viewport. */
+    h1, h2, h3 { overflow-wrap: break-word; }
+
+    /* The nav disclosure. Hidden above the breakpoint: desktop keeps the full row. */
+    .nav-toggle {
+      display: none; align-items: center; justify-content: center;
+      width: 44px; height: 44px; margin-left: auto;
+      background: transparent; border: 1px solid var(--line, rgba(0,0,0,.12));
+      border-radius: 10px; color: inherit; cursor: pointer; padding: 0;
+    }
+    .nav-toggle .i-x { display: none; }
+    nav.open .nav-toggle .i-bars { display: none; }
+    nav.open .nav-toggle .i-x { display: inline; }
+
+    @media (max-width: 760px) {
+      /* One row: brand on the left, toggle on the right. The links become a panel
+         underneath instead of a second and third wrapped row. */
+      nav { flex-wrap: wrap; row-gap: 0; align-items: center; }
+      .nav-toggle { display: inline-flex; order: 2; }
+      .nav-links {
+        display: none; width: 100%; order: 3; flex-direction: column;
+        align-items: stretch; gap: 0; padding: 6px 0 10px;
+      }
+      nav.open .nav-links { display: flex; }
+      /* 48px rows: comfortably past the 44px minimum, and they are the primary
+         way to move around the page on a phone. */
+      .nav-links a:not(.nav-cta) {
+        font-size: 16px; padding: 13px 2px; min-height: 48px;
+        display: flex; align-items: center;
+        border-bottom: 1px solid var(--line, rgba(0,0,0,.08));
+      }
+      .nav-links .nav-cta {
+        order: 0; margin: 10px 0 0; text-align: center;
+        min-height: 48px; display: flex; align-items: center; justify-content: center;
+      }
+    }
+
+    /* Phones. The gap the site never had. */
+    @media (max-width: 640px) {
+      section, .hero, nav, footer { padding-left: 16px; padding-right: 16px; }
+      section { padding-top: 44px; padding-bottom: 44px; }
+      .hero { padding-top: 26px; }
+      .tile, .card, .spot { padding: 16px; }
+      .grid-4, .grid-3, .grid-2, .cap, .hero-grid { grid-template-columns: minmax(0,1fr); gap: 14px; }
+      /* Hero buttons side by side are two cramped targets; stack them full width. */
+      .hero .btn, .cta .btn { width: 100%; justify-content: center; }
+      .hero .btn + .btn, .cta .btn + .btn { margin-top: 10px; margin-left: 0; }
+      /* A video forced to a desktop aspect leaves letterboxing and a tiny picture. */
+      video, .video, iframe { max-width: 100%; height: auto; }
+      /* The theme toggle is fixed-position chrome; keep it clear of the nav row. */
+      .toggle { transform: scale(.92); transform-origin: top right; }
+    }
+
+    /* ── The embedded demo. It is an application shell, so it needs more than the
+       marketing page: three fixed panes, fixed-column grids and data tables. ── */
+    @media (max-width: 760px) {
+      /* 900px only took these to two columns, which is still two columns on a phone. */
+      #dm .g2, #dm .g3, #dm .g4, #dm .g5 { grid-template-columns: minmax(0,1fr); }
+      /* The designer: palette | canvas | properties = 560px of FIXED chrome, so it
+         could never fit. Stack it and let the page scroll instead of the panes. */
+      #dm .des { grid-template-columns: minmax(0,1fr); height: auto; }
+      #dm .des > div { overflow: visible; }
+      #dm .pal, #dm .props { border-left: 0; border-right: 0; border-top: 1px solid var(--line); }
+      #dm .canvas { padding: 14px; }
+      #dm .d-flow { max-width: 100%; }
+      #dm .overview { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      /* Six columns of inputs cannot work at this width; label-over-field instead. */
+      #dm .cols { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 6px 8px; }
+      #dm .cols .h { display: none; }
+      /* Tables keep their shape and scroll INSIDE their card, so the page itself
+         never gains a horizontal scrollbar. */
+      #dm .d-card { overflow-x: auto; }
+      #dm table { min-width: 520px; }
+      #dm .page { padding: 14px 14px 48px; }
+      #dm .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      #dm .tabs a { white-space: nowrap; }
+      #dm .sugg { width: min(300px, calc(100vw - 32px)); }
+      #dm .tl li { grid-template-columns: 24px minmax(0,1fr); }
+      #dm .tl li > span.hint:last-child { grid-column: 2; }
+      #dm .login { padding: 20px 16px; }
+    }
+
+    /* ── Input capability, not device name. Touch pointers get larger targets and
+       lose hover-only affordances, which simply never fire on a touchscreen. ── */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .nav-cta, button, select, input[type="submit"] { min-height: 44px; }
+      #dm .btn, #dm .ibtn { min-height: 40px; }
+      #dm .btn.sm { min-height: 36px; }
+      /* Rows that reveal intent on hover need a visible resting state instead. */
+      #dm tr.click td { position: relative; }
+      #dm .pal .it { padding: 10px; }
+      /* A grab cursor is meaningless without a mouse. */
+      #dm .pal .it { cursor: pointer; }
+    }
+
   </style>
+  <noscript>
+    <style>
+      /* No JS: the toggle cannot work, so show the links and hide the button.
+         Falls back to the previous wrapped-row behaviour, which is usable. */
+      @media (max-width: 760px) {
+        .nav-toggle { display: none !important; }
+        .nav-links { display: flex !important; }
+      }
+    </style>
+  </noscript>
 </head>
 <body>
 
@@ -338,7 +473,15 @@
         <img class="brand-mark on-light" src="/brand/mark/dataado-mark-light.svg" alt="DataADO" width="32" height="32" />
         <img class="brand-mark on-dark"  src="/brand/mark/dataado-mark-dark.svg"  alt="DataADO" width="32" height="32" />
       </a>
-      <div class="nav-links">
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links"
+              aria-label="Menu" type="button">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path class="i-bars" d="M4 7h16M4 12h16M4 17h16"/>
+          <path class="i-x" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+      <div class="nav-links" id="nav-links">
         <a href="#watch">Watch</a>
         <a href="#platform">Platform</a>
         <a href="#capabilities">Capabilities</a>
@@ -480,7 +623,7 @@
         <div class="tile">
           <span class="tag">Data Catalog</span>
           <h3 class="sg" style="font-size:26px;letter-spacing:-.02em;margin:6px 0 12px;">Understand a database you've never seen</h3>
-          <p style="font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 18px;">Handed an unfamiliar clinical or ERP system? DataADO scans it and tells you where the demographics, orders, results, documents, flags and code tables actually live, even when the tables are named <span class="sg" style="color:var(--ink);">T_47</span> and the columns <span class="sg" style="color:var(--ink);">C1…C7</span>. The same map comes back whichever of the four engines the source runs on.</p>
+          <p style="font-size:15px;line-height:1.65;color:var(--muted);margin:0 0 18px;">Handed an unfamiliar ERP, finance or line-of-business system? DataADO scans it and tells you where the customers, orders, amounts, documents, flags and code tables actually live, even when the tables are named <span class="sg" style="color:var(--ink);">T_47</span> and the columns <span class="sg" style="color:var(--ink);">C1…C7</span>. The same map comes back whichever of the four engines the source runs on, and a concept pack narrows the vocabulary to your domain, neutral business by default, clinical if that is what you run.</p>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Classifies columns by their <strong>data</strong>, not their names, SSNs, emails, file paths, flags and documents are recognised by value shape.</span></div>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Finds <strong>file-pointer</strong> columns DataADO can then act on, locate the pointer, fetch what it points at.</span></div>
           <div class="checkrow"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--check)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><span>Aggregates-only sampling, it learns "96% SSN-shaped" without ever reading a single value. Shape travels; content never does.</span></div>
@@ -1200,6 +1343,43 @@ document.getElementById('dm').addEventListener('click',function(e){ const a=e.ta
 document.getElementById('open-demo').addEventListener('click',function(e){ e.preventDefault(); openDemo(); });
 if(location.hash==='#demo') openDemo();
 
+  </script>
+  <script>
+    /* Nav disclosure. The no-JS case is handled by the <noscript> block in <head>,
+       which shows the links and hides the toggle - without it, display:none below
+       760px would leave a JS-less phone with no way to reach any section. */
+    (function () {
+      var nav = document.querySelector('nav');
+      var btn = document.getElementById('nav-toggle');
+      if (!nav || !btn) return;
+      btn.addEventListener('click', function () {
+        var open = nav.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      /* Choosing a destination should close the menu, or the panel covers what
+         you just navigated to. */
+      nav.addEventListener('click', function (e) {
+        if (e.target.closest('.nav-links a')) {
+          nav.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+      /* Escape closes it, and returning to a wide viewport must not leave the
+         panel stuck open. */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && nav.classList.contains('open')) {
+          nav.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.focus();
+        }
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 760 && nav.classList.contains('open')) {
+          nav.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
   </script>
 </body>
 </html>
